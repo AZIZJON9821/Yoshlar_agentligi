@@ -1,0 +1,8 @@
+import React, { ReactNode } from "react";
+
+export interface ButtonProps {
+  className?: string;
+  children: ReactNode;
+  style?: React.CSSProperties;
+  id?: string;
+}

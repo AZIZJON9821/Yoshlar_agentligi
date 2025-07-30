@@ -2,18 +2,20 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #d9d9d9;
   background-color: #F5F5F5;
   color: #1D1B20;
+  cursor: pointer;
 }
 .dark {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  padding: 12px;
+  padding: 10px;
   background-color: #2C2C2C;
   border: 1px solid #2C2C2C;
   color: #F5F5F5;
+  cursor: pointer;
 }
 
