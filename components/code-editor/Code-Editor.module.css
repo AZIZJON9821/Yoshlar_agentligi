@@ -1,6 +1,10 @@
 .code-editor {
   width: 845px;
-  height: 310px;
+  min-height: 310px;
   background-color: #ffffff;
   border-radius: 8px;
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
 }
