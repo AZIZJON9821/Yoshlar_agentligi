@@ -5,8 +5,17 @@ import SettingsIcon from "../../app/Profile/icons/settings.icon";
 import UserIcon from "../../app/Profile/icons/user.icon";
 import Action from "@/components/actions";
 import Link from "next/link";
+import { useAuth } from "@/context";
+import { useTheme } from "@/context";
 
 const NavbarLayout = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <div className="container">
       <div className={cls.header}>
@@ -15,19 +24,31 @@ const NavbarLayout = () => {
         </div>
 
         <div className={cls["header-actions"]}>
-          <Action mode="light">
-            <Link href={"/posts/add"}>
-              <PlusIcon />
-            </Link>
-          </Action>
-          <Action mode="light">
+          {isAuthenticated && (
+            <Action mode="light">
+              <Link href={"/posts/add"}>
+                <PlusIcon />
+              </Link>
+            </Action>
+          )}
+          
+          <Action mode="light" onClick={toggleTheme}>
             <SettingsIcon />
           </Action>
-          <Action mode="dark">
-            <Link href={"/profile"}>
-              <UserIcon />
-            </Link>
-          </Action>
+          
+          {isAuthenticated ? (
+            <Action mode="dark">
+              <Link href={"/profile"}>
+                <UserIcon />
+              </Link>
+            </Action>
+          ) : (
+            <Action mode="dark">
+              <Link href={"/auth/login"}>
+                Login
+              </Link>
+            </Action>
+          )}
         </div>
       </div>
     </div>
