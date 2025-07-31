@@ -58,7 +58,7 @@ const AddPost = () => {
           <CodeEditor
             name="code"
             control={control}
-            style={{ minHeight: 200 }}
+            style={{ width:"100%" }}
           />
         </div>
 
