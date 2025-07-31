@@ -1,6 +1,4 @@
 import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import cls from "./PostComponet.module.css";
 import LikeIcon from "./like.icon";
@@ -38,14 +36,7 @@ const PostComponent = ({
         {title} | #{language}
       </div>
       <div className={cls["post-content"]}>
-        <SyntaxHighlighter
-          language={language}
-          style={coy}
-          wrapLines
-          showLineNumbers
-        >
-          {code}
-        </SyntaxHighlighter>
+        <pre>{code}</pre>
       </div>
       <div className={cls["post-footer"]}>
         <div>
