@@ -5,4 +5,6 @@ export interface ButtonProps {
   children: ReactNode;
   style?: React.CSSProperties;
   id?: string;
+  type?:string;
+  onClick?:()=>void;
 }

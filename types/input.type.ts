@@ -22,5 +22,7 @@ export interface InputProps {
   className?: string;
   id?: string;
   options?: { label: string; value: string | number }[];
-  control: Control;
+  control: Control<any>;
+  onChange?: () => void;
+  onInput?: () => void;
 }
