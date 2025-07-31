@@ -1,0 +1,5 @@
+export {default as DislikeIcon} from './dislike.icon'
+export {default as LikeIcon} from './like.icon'
+export {default as PlusIcon} from './plus.icon'
+export {default as SettingsIcon} from './settings.icon'
+export {default as UserIcon} from './user.icon'
