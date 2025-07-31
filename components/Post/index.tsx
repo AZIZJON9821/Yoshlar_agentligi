@@ -52,7 +52,12 @@ const PostComponent = ({
           </button>
           <Button
             children={"Comments"}
-            className={cls["btn-comments"]}
+            style={{
+              width: "83px",
+              height: "25px",
+              borderRadius: "4px",
+              marginLeft: "13px",
+            }}
             onClick={() => setModalOpen(true)}
           />
 
