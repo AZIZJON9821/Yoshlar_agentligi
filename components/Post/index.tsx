@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CopyBlock, github } from "react-code-blocks";
 
 import cls from "./PostComponet.module.css";
 import LikeIcon from "./like.icon";
@@ -38,7 +39,14 @@ const PostComponent = ({
         {title} | #{language}
       </div>
       <div className={cls["post-content"]}>
-        <pre>{code}</pre>
+        <CopyBlock
+          language={language}
+          text={code}
+          theme={github}
+          showLineNumbers
+        />
+        {/* {code}
+        </CopyBlock> */}
       </div>
       <div className={cls["post-footer"]}>
         <div>
