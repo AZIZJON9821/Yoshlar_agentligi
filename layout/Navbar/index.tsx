@@ -10,12 +10,24 @@ const NavbarLayout = () => {
   return (
     <div className="container">
       <div className={cls.header}>
-        <div className={cls.title}>Code museum</div>
+        <div className={cls.title}>
+          <Link href={"/"}>Code museum</Link>
+        </div>
 
-        <div className={cls['header-actions']}>
-          <Action mode="light"><Link href={"/posts/add"}><PlusIcon /></Link></Action>
-          <Action mode="light"><SettingsIcon /></Action>
-          <Action mode="dark"><Link href={"/profile"}><UserIcon /></Link></Action>
+        <div className={cls["header-actions"]}>
+          <Action mode="light">
+            <Link href={"/posts/add"}>
+              <PlusIcon />
+            </Link>
+          </Action>
+          <Action mode="light">
+            <SettingsIcon />
+          </Action>
+          <Action mode="dark">
+            <Link href={"/profile"}>
+              <UserIcon />
+            </Link>
+          </Action>
         </div>
       </div>
     </div>
