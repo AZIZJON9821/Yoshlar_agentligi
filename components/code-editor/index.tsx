@@ -1,16 +1,31 @@
-import React from 'react'
-import cls from './Code-Editor.module.css'
-import { CodeEditorType } from '@/types/codeEditor.type'
+import React, { useRef, useEffect } from 'react';
+import cls from './Code-Editor.module.css';
+import { CodeEditorType } from '@/types/codeEditor.type';
+import { Controller } from 'react-hook-form';
 
-const CodeEditor = (props: CodeEditorType) => {
+const CodeEditor = ({ control, name, ...rest }: CodeEditorType) => {
+    const editorRef = useRef<HTMLDivElement>(null);
+
     return (
-        <div
-            className={cls['code-editor']}
-            contentEditable="true"
-            suppressContentEditableWarning={true}
-            style={props.style}
-        ></div>
-    )
-}
+        <Controller
+            name={name}
+            control={control}
+            render={({ field }) => {
+                return (
+                    <div
+                        ref={editorRef}
+                        className={cls['code-editor']}
+                        contentEditable="true"
+                        suppressContentEditableWarning={true}
+                        onInput={(e) => field.onChange((e.target as HTMLDivElement).innerText)}
+                        onBlur={(e) => field.onBlur()}
+                        dangerouslySetInnerHTML={{ __html: field.value || '' }}
+                        {...rest}
+                    />
+                );
+            }}
+        />
+    );
+};
 
-export default CodeEditor
+export default CodeEditor;
