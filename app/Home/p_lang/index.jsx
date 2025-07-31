@@ -3,6 +3,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import "./style.css";
+import { customAxios } from "@/api";
 
 const LanguageSelector = () => {
   const [languages, setLanguages] = useState([]);
@@ -10,7 +11,7 @@ const LanguageSelector = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    fetch("https://api.example.com/languages") 
+    customAxios.get("/languages") 
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
