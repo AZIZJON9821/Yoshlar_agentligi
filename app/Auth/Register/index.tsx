@@ -16,7 +16,7 @@ const Register = () => {
         <Input control={control} style={{ width: '100%', minWidth: '400px' }} name="password" type="password" variant={InputVariant.input} placeholder="Password" required={true} />
         <Input control={control} style={{ width: '100%', minWidth: '400px' }} name="ghUsername" variant={InputVariant.input} placeholder="Git Hub username" />
         <Input control={control} style={{ width: '100%', minWidth: '400px' }} name="email" variant={InputVariant.input} placeholder="Email" />
-        <Button style={{ width: '100%' }}>Submit</Button>
+        <Button type='submit' style={{ width: '100%' }}>Submit</Button>
       </form>
       <Link href='/auth/login' className={cls.link}>Do you already have an account?</Link>
     </div>
