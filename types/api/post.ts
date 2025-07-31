@@ -1,3 +1,6 @@
+import { Category } from "./categories";
+import { User } from "./user";
+
 export interface Post {
   id: number;
   title: string;
@@ -5,6 +8,6 @@ export interface Post {
   userId: string;
   categoryId: string;
   createdAt: string;
-  user: {};
-  category: {};
+  user: User;
+  category: Category;
 }

@@ -4,3 +4,4 @@ export * from "./input.type";
 export * from "./button.type";
 export * from "./codeEditor.type";
 export * from "./form.data";
+export * from "./api";
