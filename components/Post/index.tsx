@@ -44,6 +44,7 @@ const PostComponent = ({
           text={code}
           theme={github}
           showLineNumbers
+          copied={false}
         />
       </div>
       <div className={cls["post-footer"]}>

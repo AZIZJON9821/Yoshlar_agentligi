@@ -54,11 +54,7 @@ const AddPost = () => {
         </div>
 
         <div className={styles.editorWrapper}>
-          <CodeEditor
-            name="code"
-            control={control}
-            style={{ minHeight: 200 }}
-          />
+          <CodeEditor name="code" control={control} style={{ width: "100%" }} />
         </div>
 
         <div className={styles.actions}>
