@@ -1,10 +1,10 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import Input from "@/components/Input";
 import CodeEditor from "@/components/code-editor";
 import Button from "@/components/button";
 import styles from "./add.post.module.css";
-import { InputVariant } from "@/types";
+import { FormData, InputVariant } from "@/types";
 
 const LANGUAGES = [
   { value: "#python", label: "Python" },
@@ -13,24 +13,23 @@ const LANGUAGES = [
   { value: "#cpp", label: "C++" },
 ];
 
-type FormData = {
-  title: string;
-  language: string;
-  code: string;
-  author: string;
-};
-
-const AddPostTwo = () => {
-  const { control, handleSubmit } = useForm<FormData>({
+const AddPost = () => {
+  const { control, handleSubmit, setValue } = useForm<FormData>({
     defaultValues: {
       title: "",
       language: "#python",
       code: "",
       author: "",
+      anonymous: true,
     },
   });
 
+  const anonymous = useWatch({ control, name: "anonymous" });
+
   const onSubmit = (data: FormData) => {
+    if (data.anonymous) {
+      data.author = "";
+    }
     console.log(data);
   };
 
@@ -55,16 +54,32 @@ const AddPostTwo = () => {
         </div>
 
         <div className={styles.editorWrapper}>
-          <CodeEditor name="code" control={control} style={{ width: "100%" }} />
+          <CodeEditor
+            name="code"
+            control={control}
+            style={{ minHeight: 200 }}
+          />
         </div>
 
         <div className={styles.actions}>
-          <Input
-            variant={InputVariant.input}
-            name="author"
-            placeholder="Author name"
-            control={control}
-          />
+          <div className={styles.leftGroup}>
+            <Input
+              variant={InputVariant.input}
+              name="author"
+              placeholder="Author name"
+              control={control}
+              disabled={!!anonymous}
+            />
+
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={anonymous}
+                onChange={(e) => setValue("anonymous", e.target.checked)}
+              />
+              Anonymous sharing
+            </label>
+          </div>
           <Button type="submit">Submit</Button>
         </div>
       </div>
@@ -72,4 +87,4 @@ const AddPostTwo = () => {
   );
 };
 
-export default AddPostTwo;
+export default AddPost;
