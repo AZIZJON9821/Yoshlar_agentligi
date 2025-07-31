@@ -53,7 +53,7 @@ const Profile = () => {
           [...Array(3)].map((_, i) => (
             <div key={i} className={cls["post-card"]}>
               <div className={cls["post-header"]}>Get rectangle area | <span>#js</span></div>
-              <CodeEditor style={{ width: '843px', height: '148px', marginBottom: '14px' }} />
+              <div style={{ width: '843px', height: '148px', marginBottom: '14px',backgroundColor:'#ffffff' }} ></div>
               <div className={cls["post-footer"]}>
                 <div className={cls["action-buttons"]}>
                   <button className="like-button"><LikeIcon /></button>
@@ -72,7 +72,7 @@ const Profile = () => {
         {activeTab === 'reactions' && (
           <div className={cls["post-card"]}>
             <div className={cls["post-header"]}>❤️ You reacted to this post | <span>#react</span></div>
-            <CodeEditor style={{ width: '843px', height: '148px', marginBottom: '14px' }} />
+            <div style={{ width: '843px', height: '148px', marginBottom: '14px', backgroundColor: '#ffffff' }} ></div>
             <div className={cls["post-footer"]}>
               <div className={cls["action-buttons"]}>
                 <button className="like-button"><LikeIcon /></button>
