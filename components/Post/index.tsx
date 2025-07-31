@@ -40,7 +40,7 @@ const PostComponent = ({
       </div>
       <div className={cls["post-content"]}>
         <CopyBlock
-          language={language}
+          language={language.toLowerCase()}
           text={code}
           theme={github}
           showLineNumbers
