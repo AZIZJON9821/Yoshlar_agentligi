@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import cls from "./PostComponet.module.css";
 import LikeIcon from "./like.icon";
 import DisLikeIcon from "./dislike.icon";
 import Button from "../button";
+import CommentsModal from "../Modal";
 
 interface PostProps {
   id: string | number;
@@ -30,6 +31,7 @@ const PostComponent = ({
   onLike,
   onDislike,
 }: PostProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <div className={cls["post-container"]}>
       <div className={cls.title}>
@@ -49,6 +51,8 @@ const PostComponent = ({
             {dislikes}
           </button>
           <Button children={"Comments"} className={cls["btn-comments"]} />
+          <button onClick={() => setModalOpen(true)}>Comments</button>
+          {modalOpen && <CommentsModal onClose={() => setModalOpen(false)} />}
         </div>
         <div className={cls["post-author"]}>
           <p>{author},</p>
