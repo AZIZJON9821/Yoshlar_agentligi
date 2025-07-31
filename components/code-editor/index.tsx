@@ -1,7 +1,8 @@
 import React from 'react'
 import cls from './Code-Editor.module.css'
+import { CodeEditorType } from '@/types/codeEditor.type'
 
-const CodeEditor = (props:{style?:React.CSSProperties}) => {
+const CodeEditor = (props: CodeEditorType) => {
     return (
         <div
             className={cls['code-editor']}

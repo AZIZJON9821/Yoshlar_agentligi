@@ -50,8 +50,12 @@ const PostComponent = ({
             <DisLikeIcon />
             {dislikes}
           </button>
-          <Button children={"Comments"} className={cls["btn-comments"]} />
-          <button onClick={() => setModalOpen(true)}>Comments</button>
+          <Button
+            children={"Comments"}
+            className={cls["btn-comments"]}
+            onClick={() => setModalOpen(true)}
+          />
+
           {modalOpen && <CommentsModal onClose={() => setModalOpen(false)} />}
         </div>
         <div className={cls["post-author"]}>
