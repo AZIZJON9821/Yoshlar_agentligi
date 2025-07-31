@@ -14,7 +14,7 @@ const Login = () => {
       <form className={cls.form}>
         <Input control={control} style={{ width: '100%', minWidth: '400px' }} name="username" variant={InputVariant.input} placeholder="Username" required={true} />
         <Input control={control} style={{ width: '100%', minWidth: '400px' }} name="password" type="password" variant={InputVariant.input} placeholder="Password" required={true} />
-        <Button style={{ width: '100%' }}>Submit</Button>
+        <Button type="submit" style={{ width: '100%' }}>Submit</Button>
       </form>
       <Link href='/auth/register' className={cls.link}>Don't have an account?</Link>
     </div>
