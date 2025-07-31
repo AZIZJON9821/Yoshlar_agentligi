@@ -1,4 +1,5 @@
 import { AddPostPage } from "@/app";
+
 import React from "react";
 
 const AddPost = () => {
