@@ -1,120 +1,89 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { usePosts } from "@/context";
-import { useAuth } from "@/context";
-import { useRouter } from "next/router";
-import Button from "@/components/button";
+import React from "react";
+import { useForm, useWatch } from "react-hook-form";
 import Input from "@/components/Input";
-import { InputVariant } from "@/types";
-import toast from "react-hot-toast";
-import cls from "./add.post.module.css";
+import CodeEditor from "@/components/code-editor";
+import Button from "@/components/button";
+import styles from "./add.post.module.css";
+import { FormData, InputVariant } from "@/types";
+
+const LANGUAGES = [
+  { value: "#python", label: "Python" },
+  { value: "#js", label: "JavaScript" },
+  { value: "#ts", label: "TypeScript" },
+  { value: "#cpp", label: "C++" },
+];
 
 const AddPost = () => {
-  const { control, handleSubmit, watch } = useForm();
-  const { addPost, isLoading } = usePosts();
-  const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
-  const [selectedLanguage, setSelectedLanguage] = useState("JavaScript");
+  const { control, handleSubmit, setValue } = useForm<FormData>({
+    defaultValues: {
+      title: "",
+      language: "#python",
+      code: "",
+      author: "",
+      anonymous: true,
+    },
+  });
 
-  const languages = [
-    "JavaScript", "Python", "Java", "C++", "C#", "PHP", 
-    "Ruby", "Go", "Rust", "TypeScript", "Swift", "Kotlin"
-  ];
+  const anonymous = useWatch({ control, name: "anonymous" });
 
-  // Redirect if not authenticated
-  React.useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/auth/login');
+  const onSubmit = (data: FormData) => {
+    if (data.anonymous) {
+      data.author = "";
     }
-  }, [isAuthenticated, router]);
-
-  if (!isAuthenticated) {
-    return null;
-  }
-
-  const onSubmit = async (data: any) => {
-    try {
-      await addPost({
-        title: data.title,
-        author: user?.username || "Anonymous",
-        code: data.code,
-        language: selectedLanguage,
-        likes: 0,
-        dislikes: 0,
-        userId: user?.id || "1",
-      });
-      
-      toast.success('Post created successfully!');
-      router.push('/');
-    } catch (error) {
-      toast.error('Failed to create post. Please try again.');
-    }
+    console.log(data);
   };
 
   return (
-    <div className="container" style={{ padding: '20px' }}>
-      <h1>Create New Post</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className={cls.form}>
-        <div>
-          <label>Title:</label>
-          <Input 
-            control={control} 
-            name="title" 
-            variant={InputVariant.input} 
-            placeholder="Enter post title" 
-            required={true}
-            style={{ width: '100%', marginBottom: '15px' }}
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <h1 className={styles.title}>Add new code</h1>
+
+      <div className={styles.panel}>
+        <div className={styles.row}>
+          <Input
+            variant={InputVariant.input}
+            name="title"
+            placeholder="Title"
+            control={control}
+          />
+          <Input
+            name="language"
+            variant={InputVariant.select}
+            options={LANGUAGES}
+            control={control}
           />
         </div>
 
-        <div>
-          <label>Programming Language:</label>
-          <select 
-            value={selectedLanguage} 
-            onChange={(e) => setSelectedLanguage(e.target.value)}
-            style={{ 
-              width: '100%', 
-              padding: '10px', 
-              marginBottom: '15px',
-              borderRadius: '4px',
-              border: '1px solid #ccc'
-            }}
-          >
-            {languages.map(lang => (
-              <option key={lang} value={lang}>{lang}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>Code:</label>
-          <textarea
-            {...control.register("code")}
-            placeholder="Enter your code here..."
-            required={true}
-            style={{
-              width: '100%',
-              height: '300px',
-              padding: '10px',
-              marginBottom: '15px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-              fontFamily: 'monospace',
-              fontSize: '14px',
-              resize: 'vertical'
-            }}
+        <div className={styles.editorWrapper}>
+          <CodeEditor
+            name="code"
+            control={control}
+            style={{ minHeight: 200 }}
           />
         </div>
 
-        <Button 
-          type="submit" 
-          style={{ width: '100%' }}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Creating Post...' : 'Create Post'}
-        </Button>
-      </form>
-    </div>
+        <div className={styles.actions}>
+          <div className={styles.leftGroup}>
+            <Input
+              variant={InputVariant.input}
+              name="author"
+              placeholder="Author name"
+              control={control}
+              disabled={!!anonymous}
+            />
+
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={anonymous}
+                onChange={(e) => setValue("anonymous", e.target.checked)}
+              />
+              Anonymous sharing
+            </label>
+          </div>
+          <Button type="submit">Submit</Button>
+        </div>
+      </div>
+    </form>
   );
 };
 
