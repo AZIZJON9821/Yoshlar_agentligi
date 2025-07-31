@@ -1,3 +1,4 @@
+import React from "react";
 import { type Control } from "react-hook-form";
 
 export type InputType =
@@ -21,6 +22,7 @@ export interface InputProps {
   required?: boolean;
   className?: string;
   id?: string;
+  style?:React.CSSProperties;
   options?: { label: string; value: string | number }[];
   control: Control<any>;
   onChange?: () => void;
