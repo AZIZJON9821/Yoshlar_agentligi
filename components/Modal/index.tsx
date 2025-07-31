@@ -2,7 +2,11 @@ import { useState } from "react";
 import UserIcon from "./icons/user.icon";
 import styles from "./Modal.module.css";
 
-const CommentsModal = () => {
+interface CommentsModalProps {
+  onClose: () => void;
+}
+
+const CommentsModal = ({ onClose }: CommentsModalProps) => {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([
     "Example comment text here about the code that written by someone...",
@@ -20,11 +24,13 @@ const CommentsModal = () => {
   };
 
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.nav}>
           <h2>Comments</h2>
-          <button className={styles.closeBtn}>×</button>
+          <button className={styles.closeBtn} onClick={onClose}>
+            ×
+          </button>
         </div>
         <div className={styles.body}>
           <div className={styles.commentList}>
