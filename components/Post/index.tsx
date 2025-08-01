@@ -83,7 +83,9 @@ const PostComponent = ({
             onClick={() => setModalOpen(true)}
           />
 
-          {modalOpen && <CommentsModal onClose={() => setModalOpen(false)} />}
+          {modalOpen && (
+            <CommentsModal postId={id} onClose={() => setModalOpen(false)} />
+          )}
         </div>
         <div className={cls["post-author"]}>
           <p className={cls["author-name"]}>{author},</p>

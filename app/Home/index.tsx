@@ -13,8 +13,8 @@ const HomePage = () => {
   const handleDislike = (id: string | number) => {
     console.log("Dislike:", id);
   };
+
   const { data: posts } = useGetAllPosts();
-  console.log(posts, "dfjvfjd");
 
   const filteredPosts =
     selectedCategoryIds.length > 0
@@ -24,8 +24,6 @@ const HomePage = () => {
           )
         )
       : posts;
-
-  console.log(filteredPosts);
 
   return (
     <div className="container">

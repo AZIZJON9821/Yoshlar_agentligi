@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import cls from "./lang.module.css";
 import { customAxios } from "@/api";
 
-const LanguageSelector = ({onSelect}) => {
+const LanguageSelector = ({ onSelect }) => {
   const [languages, setLanguages] = useState([]);
   const [selected, setSelected] = useState([]);
   const containerRef = useRef(null);
@@ -11,8 +11,8 @@ const LanguageSelector = ({onSelect}) => {
     customAxios
       .get("/categories")
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setLanguages(res.data);
+        if (Array.isArray(res.data.data)) {
+          setLanguages(res.data.data);
         } else {
           console.error("API noto‘g‘ri formatda:", res.data);
         }
@@ -23,19 +23,15 @@ const LanguageSelector = ({onSelect}) => {
   const toggleSelection = (lang) => {
     const isSelected = selected.some((item) => item.id === lang.id);
 
+    let updated;
     if (isSelected) {
-      const updated = selected.filter((item) => item.id !== lang.id);
-      setSelected(updated);
-      console.log("Tanlanmagan categoryId:", lang.id);
+      updated = selected.filter((item) => item.id !== lang.id);
     } else {
-      const updated = [...selected, lang];
-      setSelected(updated);
-      console.log("Tanlangan categoryId:", lang.id);
+      updated = [...selected, lang];
     }
 
-    console.log(updated,"kjfvhljfhdljfayv")
-
     setSelected(updated);
+
     if (onSelect) {
       onSelect(updated.map((item) => item.id));
     }
@@ -65,9 +61,7 @@ const LanguageSelector = ({onSelect}) => {
           <button
             key={lang.id}
             className={`${cls["lang-button"]} ${
-              selected.some((item) => item.id === lang.id)
-                ? `${cls["acive"]}`
-                : ""
+              selected.some((item) => item.id === lang.id) ? cls["active"] : ""
             }`}
             onClick={() => toggleSelection(lang)}
           >
