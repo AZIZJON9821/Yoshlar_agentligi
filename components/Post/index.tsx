@@ -6,6 +6,7 @@ import DisLikeIcon from "./dislike.icon";
 import Button from "../button";
 import CommentsModal from "../Modal";
 import cls from "./post.component.module.css";
+import { CgPushChevronDownR, CgPushChevronUpR } from "react-icons/cg";
 
 interface PostProps {
   id: string | number;
@@ -33,6 +34,12 @@ const PostComponent = ({
   onDislike,
 }: PostProps) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [showFull, setShowFull] = useState(false);
+
+  const lines = code.split("\n");
+  const visible = showFull ? code : lines.slice(0, 15).join("\n");
+  const isLong = lines.length > 10;
+
   return (
     <div className={cls["post-container"]}>
       <div className={cls.title}>
@@ -41,11 +48,19 @@ const PostComponent = ({
       <div className={cls["post-content"]}>
         <CopyBlock
           language={language.toLowerCase()}
-          text={code}
+          text={visible}
           theme={github}
           showLineNumbers
           copied={false}
         />
+        {isLong && (
+          <button
+            className={cls["toggle-button"]}
+            onClick={() => setShowFull(!showFull)}
+          >
+            {showFull ? <CgPushChevronUpR /> : <CgPushChevronDownR />}
+          </button>
+        )}
       </div>
       <div className={cls["post-footer"]}>
         <div>
