@@ -3,6 +3,14 @@ import { Comment } from "./comments";
 import { Like } from "./likes";
 import { User } from "./user";
 
+export interface PostCategory {
+  id: string;
+  postId: string;
+  categoryId: string;
+  createdAt: string;
+  category: Category;
+}
+
 export interface Post {
   id: string;
   title: string;
@@ -10,7 +18,7 @@ export interface Post {
   userId: string;
   createdAt: string;
   user: User;
-  PostCategory: Category
+  PostCategory: PostCategory[];
   comments: Comment[];
   likes: Like[];
 }
