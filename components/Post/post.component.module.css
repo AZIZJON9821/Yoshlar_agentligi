@@ -48,4 +48,14 @@
   gap: 10px;
   font-size: 10px;
   font-weight: 500;
+  align-items: center;
+}
+.author-name {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.created-date {
+  color: gray;
+  font-size: 10px;
 }

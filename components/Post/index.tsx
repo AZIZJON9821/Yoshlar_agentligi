@@ -71,8 +71,25 @@ const PostComponent = ({
           {modalOpen && <CommentsModal onClose={() => setModalOpen(false)} />}
         </div>
         <div className={cls["post-author"]}>
-          <p>{author},</p>
-          <p>{new Date(createdAt).toLocaleString()}</p>
+          <p className={cls["author-name"]}>{author},</p>
+          <p>
+            {(() => {
+              const date = new Date(createdAt);
+              return (
+                date.toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                }) +
+                ", " +
+                date.toLocaleTimeString("en-GB", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })
+              );
+            })()}
+          </p>
         </div>
       </div>
     </div>
