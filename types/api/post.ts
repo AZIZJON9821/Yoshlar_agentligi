@@ -1,14 +1,49 @@
-import { Category } from "./categories";
-import { Comment } from "./comments";
-import { Like } from "./likes";
-import { User } from "./user";
+interface Category {
+  id: string;
+  name: string;
+}
 
-export interface PostCategory {
+interface PostCategory {
   id: string;
   postId: string;
   categoryId: string;
   createdAt: string;
   category: Category;
+}
+
+interface Comment {
+  id: string;
+  content: string;
+  userId: string;
+  postId: string;
+  createdAt: string;
+}
+
+interface User {
+  id: string;
+  username: string;
+  githubURL: string;
+}
+
+interface ReactionUser {
+  id: string;
+  username: string;
+}
+
+interface Reaction {
+  id: string;
+  like: number;
+  dislike: number;
+  userId: string;
+  postId: string;
+  createdAt: string;
+  User: ReactionUser;
+}
+
+interface ReactionSummary {
+  totalLikes: number;
+  totalDislikes: number;
+  totalReactions: number;
 }
 
 export interface Post {
@@ -20,5 +55,6 @@ export interface Post {
   user: User;
   PostCategory: PostCategory[];
   comments: Comment[];
-  likes: Like[];
+  reactions: Reaction[];
+  summary: ReactionSummary;
 }

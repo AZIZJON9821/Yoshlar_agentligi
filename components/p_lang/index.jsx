@@ -11,11 +11,15 @@ const LanguageSelector = ({ onSelect }) => {
     customAxios
       .get("/categories")
       .then((res) => {
+
         if (Array.isArray(res.data.data)) {
           setLanguages(res.data.data);
         } else {
           console.error("API noto‘g‘ri formatda:", res.data);
         }
+
+        setLanguages(res.data);
+
       })
       .catch((err) => console.error("API xatosi:", err));
   }, []);
@@ -57,11 +61,13 @@ const LanguageSelector = ({ onSelect }) => {
       </button>
 
       <div className={cls["container"]} ref={containerRef}>
-        {languages.map((lang) => (
+        {languages.data?.map((lang) => (
           <button
             key={lang.id}
             className={`${cls["lang-button"]} ${
+
               selected.some((item) => item.id === lang.id) ? cls["active"] : ""
+
             }`}
             onClick={() => toggleSelection(lang)}
           >

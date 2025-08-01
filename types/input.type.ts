@@ -22,6 +22,7 @@ export interface InputProps {
   required?: boolean;
   disabled?: boolean;
   className?: string;
+  defaultValue?: string;
   id?: string;
   style?: React.CSSProperties;
   options?: { label: string; value: string | number }[];
