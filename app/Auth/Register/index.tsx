@@ -16,7 +16,7 @@ const Register = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await register(data.username, data.email, data.password, data.ghUsername);
+      await register({username:data.username, email:data.email, password:data.password, github_username:data.ghUsername});
       toast.success('Registration successful!');
       router.push('/');
     } catch (error) {

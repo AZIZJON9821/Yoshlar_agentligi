@@ -2,11 +2,12 @@ import { InputProps, InputVariant } from "@/types";
 import { Controller } from "react-hook-form"
 import cls from './Input.module.css'
 
-const Input = ({ variant, name, type = 'text', control, options, ...rest }: InputProps) => {
+const Input = ({ variant, name,defaultValue='', type = 'text', control, options, ...rest }: InputProps) => {
     return (
         <Controller
             name={name}
             control={control}
+            defaultValue={defaultValue}
             render={({ field }) => {
                 if (variant === InputVariant.select) {
                     return (

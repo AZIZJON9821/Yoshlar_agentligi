@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { customAxios } from '../api/instances/codeMuseum';
+import { setCookie } from 'cookies-next/client';
 
 interface User {
   id: string;
   username: string;
   email: string;
-  github_username?: string;
+  githubURL?: string;
   avatar?: string;
 }
 
@@ -16,20 +17,18 @@ interface LoginRequest {
 
 interface RegisterRequest {
   username: string;
-  email: string;
+  email?: string | null;
   password: string;
-  github_username: string;
+  github_username?: string | null;
 }
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (payload:LoginRequest) => Promise<void>;
   logout: () => void;
-  register: (username: string, email: string, password: string, github_username: string) => Promise<void>;
-  deleteUser: (id: string) => Promise<void>;
-  getAllUsers: () => Promise<User[]>;
+  register: ({username, email, password, github_username}:RegisterRequest) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -53,7 +52,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    // Check for existing user session
     const checkAuth = async () => {
       try {
         const savedUser = localStorage.getItem('user');
@@ -70,22 +68,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (payload:LoginRequest) => {
+    const {username,password}=payload
     setIsLoading(true);
     try {
       const response = await customAxios.post('/auth/login', {
         username,
         password
       });
-
+      
+      
       if (response.data) {
         const userData: User = {
           id: response.data.id || '1',
           username: response.data.username || username,
           email: response.data.email || `${username}@example.com`,
-          github_username: response.data.github_username,
-          avatar: response.data.avatar
+          githubURL: response.data.github_username,
         };
+        setCookie('access_token',response.data.token)
         
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
@@ -105,14 +105,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const register = async (username: string, email: string, password: string, github_username: string) => {
+  const register = async ({username,email=null,password,github_username=null}:RegisterRequest) => {
     setIsLoading(true);
     try {
       const response = await customAxios.post('/auth/register', {
         username,
         email,
         password,
-        github_username
+        githubURL:github_username
       });
 
       if (response.data) {
@@ -120,8 +120,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           id: response.data.id || '1',
           username: response.data.username || username,
           email: response.data.email || email,
-          github_username: response.data.github_username || github_username,
-          avatar: response.data.avatar
+          githubURL: response.data.github_username || github_username,
         };
         
         setUser(userData);
@@ -137,29 +136,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const deleteUser = async (id: string) => {
-    try {
-      await customAxios.delete(`/auth/${id}`);
-      
-      // If deleting current user, logout
-      if (user?.id === id) {
-        logout();
-      }
-    } catch (error) {
-      console.error('Delete user error:', error);
-      throw error;
-    }
-  };
-
-  const getAllUsers = async (): Promise<User[]> => {
-    try {
-      const response = await customAxios.get('/auth');
-      return response.data || [];
-    } catch (error) {
-      console.error('Get all users error:', error);
-      throw error;
-    }
-  };
 
   const value: AuthContextType = {
     user,
@@ -167,9 +143,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoading,
     login,
     logout,
-    register,
-    deleteUser,
-    getAllUsers,
+    register
   };
 
   return (

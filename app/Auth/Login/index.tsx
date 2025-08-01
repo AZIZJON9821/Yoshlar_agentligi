@@ -16,7 +16,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await login(data.username, data.password);
+      await login({username:data.username, password:data.password});
       toast.success('Login successful!');
       router.push('/');
     } catch (error) {
