@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import UserIcon from "./icons/user.icon";
 import styles from "./Modal.module.css";
-import { leaveComment, getAllComments } from "@/api";
 import Cookies from "js-cookie";
+import { getAllComments, leaveComment } from "@/api/comments";
 
 interface CommentsModalProps {
   onClose: () => void;

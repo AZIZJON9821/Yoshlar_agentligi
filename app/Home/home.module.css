@@ -1,0 +1,24 @@
+.p {
+  max-width: 453px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 80px;
+
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.posts{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  justify-content: space-between;
+}

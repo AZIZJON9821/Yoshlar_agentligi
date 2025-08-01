@@ -1,0 +1,54 @@
+.scroll-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  gap: 4px;
+}
+
+.scroll-btn {
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: black;
+  transition: transform 0.2s ease;
+}
+
+.scroll-btn:hover {
+  transform: scale(1.2);
+}
+
+
+
+.container {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.lang-button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s ease-in-out;
+}
+
+.lang-button.active {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
