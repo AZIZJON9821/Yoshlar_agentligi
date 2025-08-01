@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./style.css";
+import cls from "./lang.module.css";
 import { customAxios } from "@/api";
 
 const LanguageSelector = () => {
@@ -8,7 +8,8 @@ const LanguageSelector = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    customAxios.get("/categories")
+    customAxios
+      .get("/categories")
       .then((res) => {
         if (Array.isArray(res.data)) {
           setLanguages(res.data);
@@ -38,20 +39,29 @@ const LanguageSelector = () => {
       const scrollAmount = 150;
       containerRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
 
   return (
-    <div className="scroll-wrapper">
-      <button className="scroll-btn" onClick={() => scrollContainer("left")}>❮</button>
+    <div className={cls["scroll-wrapper"]}>
+      <button
+        className={cls["scroll-btn"]}
+        onClick={() => scrollContainer("left")}
+      >
+        ❮
+      </button>
 
-      <div className="container" ref={containerRef}>
+      <div className={cls["container"]} ref={containerRef}>
         {languages.map((lang) => (
           <button
             key={lang.id}
-            className={`lang-button ${selected.some((item) => item.id === lang.id) ? "active" : ""}`}
+            className={`${cls["lang-button"]} ${
+              selected.some((item) => item.id === lang.id)
+                ? `${cls["acive"]}`
+                : ""
+            }`}
             onClick={() => toggleSelection(lang)}
           >
             {lang.name}
@@ -59,7 +69,12 @@ const LanguageSelector = () => {
         ))}
       </div>
 
-      <button className="scroll-btn" onClick={() => scrollContainer("right")}>❯</button>
+      <button
+        className={cls["scroll-btn"]}
+        onClick={() => scrollContainer("right")}
+      >
+        ❯
+      </button>
     </div>
   );
 };

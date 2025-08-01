@@ -12,30 +12,31 @@ const HomePage = () => {
   const handleDislike = (id: string | number) => {
     console.log("Dislike:", id);
   };
-  const categoryId = 1;
-  const { data: posts } = useGetAllPosts(categoryId);
+  const { data: posts } = useGetAllPosts();
   return (
     <div className="container">
-      {/* <PLang /> */}
-      <div className={cls["p"]}>
-        <p>Discover the coding world</p>
-      </div>
-      <div className={cls["posts"]}>
-        {posts?.map((post) => (
-          <PostComponent
-            id={post.id}
-            title={post.title}
-            author={post.user.username}
-            code={post.code}
-            language={post.category.name}
-            likes={42}
-            dislikes={3}
-            createdAt={post.createdAt}
-            onLike={handleLike}
-            onDislike={handleDislike}
-            key={post.id}
-          />
-        ))}
+      <div className={cls["wrapper"]}>
+        <PLang />
+        <div className={cls["p"]}>
+          <p>Discover the coding world</p>
+        </div>
+        <div className={cls["posts"]}>
+          {posts?.map((post) => (
+            <PostComponent
+              id={post.id}
+              title={post.title}
+              author={post.user.username}
+              code={post.code}
+              language={post.PostCategory.name}
+              likes={post.likes.length}
+              dislikes={1}
+              createdAt={post.createdAt}
+              onLike={handleLike}
+              onDislike={handleDislike}
+              key={post.id}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

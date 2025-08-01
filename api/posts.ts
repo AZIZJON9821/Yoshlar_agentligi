@@ -2,10 +2,10 @@ import toast from "react-hot-toast";
 import { customAxios } from "./instances";
 import { Post } from "@/types";
 
-export const getAllPosts = async (categoryId: number) => {
+export const getAllPosts = async () => {
   try {
     const response = await customAxios.get<Post[]>(
-      `/get-all-posts?categoryId=${categoryId}`
+      `/posts`
     );
     return response.data || [];
   } catch (error) {

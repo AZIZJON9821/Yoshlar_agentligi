@@ -4,12 +4,13 @@ import { Like } from "./likes";
 import { User } from "./user";
 
 export interface Post {
-  id: number;
+  id: string;
   title: string;
   code: string;
   userId: string;
-  categoryId: string;
   createdAt: string;
   user: User;
-  category: Category;
+  PostCategory: Category
+  comments: Comment[];
+  likes: Like[];
 }
