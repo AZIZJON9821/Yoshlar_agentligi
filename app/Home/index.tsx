@@ -32,7 +32,7 @@ const HomePage = () => {
               author={post.user.username}
               code={post.code}
               language={post.PostCategory[0].category.name}
-              likes={post.likes.length}
+              likes={post?.likes?.length}
               dislikes={1}
               createdAt={post.createdAt}
               onLike={handleLike}

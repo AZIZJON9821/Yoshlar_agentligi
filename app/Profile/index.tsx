@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import cls from './profile.module.css';
 import Action from "@/components/actions";
 import { DislikeIcon, LikeIcon, UserIcon } from "./icons";
 import Button from "@/components/button";
 import { useUserPosts, useUserReactions } from "@/hook";
+import { useRouter } from "next/router";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<'posts' | 'reactions'>('posts');
-  const { data: userPosts } = useUserPosts() || []
-  const { data: userReactions } = useUserReactions() || []
-  const user = JSON.parse(localStorage.getItem('user') || '')
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+
+  const { data: userPosts = [] } = useUserPosts();
+  const { data: userReactions = [] } = useUserReactions();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        try {
+          setUser(JSON.parse(userData));
+        } catch (error) {
+          console.error("User JSON parsing error:", error);
+          router.push('/login');
+        }
+      } else {
+        router.push('/login');
+      }
+    }
+  }, []);
+
+  if (!user) return null; 
 
   return (
     <div className="container">
@@ -19,8 +40,7 @@ const Profile = () => {
         </div>
         <div className={cls['profile-info']}>
           <div className="username">{user.username}</div>
-
-          {user.email ? <div className="email">{user.email}</div> : null}
+          {user.email && <div className="email">{user.email}</div>}
         </div>
       </div>
 
@@ -43,30 +63,12 @@ const Profile = () => {
       </div>
 
       <div className={cls["posts-list"]}>
-        {activeTab === 'posts' && (
-          userPosts?.map((post, i) => (
-            <div key={i} className={cls["post-card"]}>
-              <div className={cls["post-header"]}>Get rectangle area | <span>#js</span></div>
-              <div style={{ width: '843px', height: '148px', marginBottom: '14px', backgroundColor: '#ffffff' }} ></div>
-              <div className={cls["post-footer"]}>
-                <div className={cls["action-buttons"]}>
-                  <button className="like-button"><LikeIcon /></button>
-                  <button className="dislike-button"><DislikeIcon /></button>
-                  <Button style={{ width: '83px', height: '25px', borderRadius: '4px' }}>Comments</Button>
-                </div>
-                <div className={cls["author-info"]}>
-                  <span>By</span> <span className="author-name">Author name</span><span>,</span>
-                  <span className="post-date">2025-05-09 12:56:55</span>
-                </div>
-              </div>
+        {activeTab === 'posts' && userPosts.map((post) => (
+          <div key={post.id} className={cls["post-card"]}>
+            <div className={cls["post-header"]}>
+              {post.title} | <span>#js</span>
             </div>
-          ))
-        )}
-
-        {activeTab === 'reactions' && userReactions?.map((reaction, i) => (
-          <div className={cls["post-card"]}>
-            <div className={cls["post-header"]}>❤️ You reacted to this post | <span>#react</span></div>
-            <div style={{ width: '843px', height: '148px', marginBottom: '14px', backgroundColor: '#ffffff' }} ></div>
+            <div style={{ width: '843px', height: '148px', marginBottom: '14px', backgroundColor: '#ffffff' }}>{post.code}</div>
             <div className={cls["post-footer"]}>
               <div className={cls["action-buttons"]}>
                 <button className="like-button"><LikeIcon /></button>
@@ -74,8 +76,28 @@ const Profile = () => {
                 <Button style={{ width: '83px', height: '25px', borderRadius: '4px' }}>Comments</Button>
               </div>
               <div className={cls["author-info"]}>
-                <span>By</span> <span className="author-name">Another author</span><span>,</span>
-                <span className="post-date">2025-07-20 16:12:00</span>
+                <span>By</span> <span className="author-name">Anonymus</span><span>,</span>
+                <span className="post-date">{post.createdAt || "Unknown date"}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {activeTab === 'reactions' && userReactions.map((reaction) => (
+          <div key={reaction.id} className={cls["post-card"]}>
+            <div className={cls["post-header"]}>
+              ❤️ You reacted to this post | <span>#js</span>
+            </div>
+            <div style={{ width: '843px', height: '148px', marginBottom: '14px', backgroundColor: '#ffffff' }}>{reaction.Post.code}</div>
+            <div className={cls["post-footer"]}>
+              <div className={cls["action-buttons"]}>
+                <button className="like-button"><LikeIcon /></button>
+                <button className="dislike-button"><DislikeIcon /></button>
+                <Button style={{ width: '83px', height: '25px', borderRadius: '4px' }}>Comments</Button>
+              </div>
+              <div className={cls["author-info"]}>
+                <span>By</span> <span className="author-name">Anonymus</span><span>,</span>
+                <span className="post-date">{reaction.createdAt || "Unknown date"}</span>
               </div>
             </div>
           </div>
