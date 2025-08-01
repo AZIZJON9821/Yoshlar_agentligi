@@ -1,0 +1,125 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+}
+
+.nav {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.closeBtn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.body {
+  display: flex;
+  height: 100%;
+}
+
+.commentList {
+  width: 55%;
+  padding: 16px;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.commentItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.commentText {
+  width: 264px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.commentText h4 {
+  margin: 0 0 6px 0;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #000000;
+}
+
+.commentText p {
+  margin: 0;
+  font-size: 14px;
+  color: #000000;
+  font-family: Montserrat;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.inputSection {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  gap: 12px;
+}
+
+.inputSection textarea {
+  width: 240px;
+  height: 134px;
+  padding: 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  resize: none;
+  background-color: #f5f5f5;
+}
+
+.inputSection button {
+  align-self: flex-end;
+  padding: 8px 20px;
+  background-color: #2c2c2c;
+  color: #fff;
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}

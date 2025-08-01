@@ -1,0 +1,10 @@
+.default-button {
+  width: 77px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #2C2C2C;
+  background-color: #2C2C2C;
+  color: #ffffff;
+  gap: 8;
+  cursor: pointer;
+}
