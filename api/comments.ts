@@ -1,25 +1,40 @@
 import toast from "react-hot-toast";
 import { customAxios } from "./instances";
-import { Post } from "@/types";
 
-export const leaveComment = async (payload: any) => {
+interface CommentProps {
+    postId: number | string;
+    message: string;
+    userId: number | string;
+}
+
+export const leaveComment = async (payload: CommentProps) => {
     try {
-        const response = await customAxios.post<Post[]>(
-            `/leave-comment`, payload
+        const response = await customAxios.post(
+            `/posts/${payload.postId}/comment`,
+            payload
         );
-        return response.data || [];
+        return response.data;
     } catch (error) {
-        toast.error("Something went wrong!");
-        console.log(error);
+        toast.error("Failed to post comment");
+        console.error(error);
     }
 };
 
-export const getAllComments = async () => {
+export const getAllComments = async (postId: number | string) => {
     try {
-        const response = await customAxios.get(`/posts/1/comments`)
-        return response.data
+        const response = await customAxios.get(`/posts/${postId}/comments`);
+        const data = response.data;
+
+        // 🔐 MUHIM: return faqat massiv bo‘lsa
+        if (Array.isArray(data)) {
+            return data;
+        } else {
+            return []; // agar massiv bo‘lmasa, bo‘sh massiv
+        }
     } catch (error) {
-        toast.error("Something went wrong!");
-        console.log(error);
+        console.error("Error fetching comments:", error);
+        return [];
     }
-}
+};
+
+
