@@ -1,24 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserIcon from "./icons/user.icon";
 import styles from "./Modal.module.css";
+import { leaveComment, getAllComments } from "@/api";
+import Cookies from "js-cookie";
 
 interface CommentsModalProps {
   onClose: () => void;
+  postId: string | number;
 }
 
-const CommentsModal = ({ onClose }: CommentsModalProps) => {
-  const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState([
-    "Example comment text here about the code that written by someone...",
-    "Example comment text here about the code that written by someone...",
-    "Example comment text here about the code that written by someone...",
-    "Example comment text here about the code that written by someone...",
-  ]);
+interface CommentType {
+  id: number;
+  message: string;
+  userName?: string;
+  createdAt?: string;
+}
 
-  const handlePost = () => {
+const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState<CommentType[]>([]);
+
+  const userId = Cookies.get("userId");
+  console.log("bu userid", userId);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const res = await getAllComments(postId);
+      setComments(res);
+    };
+    fetchComments();
+  }, [postId]);
+
+  const handlePost = async () => {
     const trimmed = commentText.trim();
-    if (trimmed) {
-      setComments([...comments, trimmed]);
+    if (!trimmed || !userId) return;
+
+    const res = await leaveComment({
+      postId,
+      message: trimmed,
+      userId: "",
+    });
+
+    if (res) {
+      const updated = await getAllComments(postId);
+      setComments(updated);
       setCommentText("");
     }
   };
@@ -32,18 +57,29 @@ const CommentsModal = ({ onClose }: CommentsModalProps) => {
             ×
           </button>
         </div>
+
         <div className={styles.body}>
           <div className={styles.commentList}>
-            {comments.map((text, index) => (
-              <div className={styles.commentItem} key={index}>
-                <UserIcon width={24} height={24} className={styles.icon} />
-                <div className={styles.commentText}>
-                  <h4>Anonymous</h4>
-                  <p>{text}</p>
+            {comments.length === 0 ? (
+              <p className={styles.noComments}>There is no comments yet...</p>
+            ) : (
+              comments.map((item, index) => (
+                <div className={styles.commentItem} key={item.id || index}>
+                  <UserIcon width={24} height={24} className={styles.icon} />
+                  <div className={styles.commentText}>
+                    <h4>{item.userName || "Anonymous"}</h4>
+                    <p>{item.message}</p>
+                    {item.createdAt && (
+                      <span className={styles.time}>
+                        {new Date(item.createdAt).toLocaleString()}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
+
           <div className={styles.inputSection}>
             <textarea
               placeholder="Type your comment here..."

@@ -15,7 +15,9 @@ const HomePage = () => {
     const data = { type: "dislike" };
     customAxios.post(`/posts/${id}/reactions`, data);
   };
+
   const { data: posts } = useGetAllPosts();
+  console.log(posts);
 
   return (
     <div className="container">
