@@ -12,7 +12,7 @@ const HomePage = () => {
   const handleDislike = (id: string | number) => {
     console.log("Dislike:", id);
   };
-  const { data: posts } = useGetAllPosts();
+  const { data: posts = [] } = useGetAllPosts();
   return (
     <div className="container">
       <div className={cls["wrapper"]}>

@@ -1,12 +1,16 @@
 import { useState } from "react";
 import UserIcon from "./icons/user.icon";
 import styles from "./Modal.module.css";
+import { leaveComment, getAllComments } from "@/api";
 
 interface CommentsModalProps {
   onClose: () => void;
 }
 
 const CommentsModal = ({ onClose }: CommentsModalProps) => {
+  const res = getAllComments()
+  console.log(res)
+  // const res = leaveComment(data)
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([
     "Example comment text here about the code that written by someone...",
