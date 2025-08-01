@@ -13,6 +13,8 @@ const HomePage = () => {
     console.log("Dislike:", id);
   };
   const { data: posts } = useGetAllPosts();
+  console.log(posts);
+  
   return (
     <div className="container">
       <div className={cls["wrapper"]}>
@@ -27,7 +29,7 @@ const HomePage = () => {
               title={post.title}
               author={post.user.username}
               code={post.code}
-              language={post.PostCategory.name}
+              language={post.PostCategory[0].category.name}
               likes={post.likes.length}
               dislikes={1}
               createdAt={post.createdAt}
