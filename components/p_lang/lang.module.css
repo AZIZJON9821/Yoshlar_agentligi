@@ -1,9 +1,10 @@
 .scroll-wrapper {
   display: flex;
   align-items: center;
-  padding: 300px;
   background-color: white;
   gap: 4px;
+  width: 100%;
+  min-height: 50px;
 }
 
 .scroll-btn {
@@ -20,8 +21,6 @@
   transform: scale(1.2);
 }
 
-
-
 .container {
   display: flex;
   gap: 8px;
@@ -29,6 +28,7 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   flex: 1;
+  min-width: 0;
 }
 
 .container::-webkit-scrollbar {
@@ -45,6 +45,9 @@
   cursor: pointer;
   white-space: nowrap;
   transition: 0.2s ease-in-out;
+  flex: 1;
+  min-width: fit-content;
+  max-width: none;
 }
 
 .lang-button.active {
@@ -53,3 +56,28 @@
   border-color: black;
 }
 
+/* Responsive behavior for fewer buttons */
+@media (max-width: 768px) {
+  .container {
+    gap: 4px;
+  }
+
+  .lang-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* When there are few buttons, make them stretch more */
+.few-buttons {
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.stretched {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  padding: 8px 12px;
+  font-weight: 500;
+}

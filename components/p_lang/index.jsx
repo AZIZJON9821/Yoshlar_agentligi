@@ -1,22 +1,38 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./style.css";
-import { customAxios } from "@/api";
+import cls from "./lang.module.css";
+import { customAxios } from "@/api/instances/codeMuseum";
 
 const LanguageSelector = () => {
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState({ data: [] });
   const [selected, setSelected] = useState([]);
   const containerRef = useRef(null);
 
+  const fallbackLanguages = {
+    data: [
+      { id: 1, name: "JavaScript" },
+      { id: 2, name: "Python" },
+      { id: 3, name: "Java" },
+      { id: 4, name: "C++" },
+      { id: 5, name: "TypeScript" },
+      { id: 6, name: "React" },
+      { id: 7, name: "Node.js" },
+      { id: 8, name: "PHP" },
+      { id: 9, name: "Ruby" },
+      { id: 10, name: "Go" },
+    ],
+  };
+
   useEffect(() => {
-    customAxios.get("/categories")
+    customAxios
+      .get("/categories")
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setLanguages(res.data);
-        } else {
-          console.error("API noto‘g‘ri formatda:", res.data);
-        }
+        console.log("API Response:", res.data);
+        setLanguages(res.data);
       })
-      .catch((err) => console.error("API xatosi:", err));
+      .catch((err) => {
+        console.error("API xatosi:", err);
+        setLanguages(fallbackLanguages);
+      });
   }, []);
 
   const toggleSelection = (lang) => {
@@ -30,6 +46,15 @@ const LanguageSelector = () => {
       const updated = [...selected, lang];
       setSelected(updated);
       console.log("Tanlangan categoryId:", lang.id);
+
+      customAxios
+        .get(`/categories/${lang.id}`)
+        .then((res) => {
+          console.log("Backenddan kelgan ma'lumot:", res.data);
+        })
+        .catch((err) => {
+          console.error("So'rov xatosi:", err);
+        });
     }
   };
 
@@ -38,20 +63,34 @@ const LanguageSelector = () => {
       const scrollAmount = 150;
       containerRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
 
-  return (
-    <div className="scroll-wrapper">
-      <button className="scroll-btn" onClick={() => scrollContainer("left")}>❮</button>
+  const hasFewButtons = languages.data?.length <= 5;
 
-      <div className="container" ref={containerRef}>
-        {languages.map((lang) => (
+  return (
+    <div className={cls["scroll-wrapper"]}>
+      <button
+        className={cls["scroll-btn"]}
+        onClick={() => scrollContainer("left")}
+      >
+        ❮
+      </button>
+
+      <div
+        className={`${cls["container"]} ${
+          hasFewButtons ? cls["few-buttons"] : ""
+        }`}
+        ref={containerRef}
+      >
+        {languages.data?.map((lang) => (
           <button
             key={lang.id}
-            className={`lang-button ${selected.some((item) => item.id === lang.id) ? "active" : ""}`}
+            className={`${cls["lang-button"]} ${
+              selected.some((item) => item.id === lang.id) ? cls["active"] : ""
+            } ${hasFewButtons ? cls["stretched"] : ""}`}
             onClick={() => toggleSelection(lang)}
           >
             {lang.name}
@@ -59,7 +98,12 @@ const LanguageSelector = () => {
         ))}
       </div>
 
-      <button className="scroll-btn" onClick={() => scrollContainer("right")}>❯</button>
+      <button
+        className={cls["scroll-btn"]}
+        onClick={() => scrollContainer("right")}
+      >
+        ❯
+      </button>
     </div>
   );
 };

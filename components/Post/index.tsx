@@ -44,7 +44,7 @@ const PostComponent = ({
           text={code}
           theme={github}
           showLineNumbers
-          copied={false}
+          copied={false ? true : undefined}
         />
       </div>
       <div className={cls["post-footer"]}>
@@ -68,7 +68,9 @@ const PostComponent = ({
             onClick={() => setModalOpen(true)}
           />
 
-          {modalOpen && <CommentsModal onClose={() => setModalOpen(false)} />}
+          {modalOpen && (
+            <CommentsModal postId={id} onClose={() => setModalOpen(false)} />
+          )}
         </div>
         <div className={cls["post-author"]}>
           <p>{author},</p>

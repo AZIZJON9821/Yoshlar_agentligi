@@ -13,10 +13,10 @@ const HomePage = () => {
   };
   return (
     <div className="container">
-      {/* <PLang /> */}
       <div className={cls["p"]}>
         <p>Discover the coding world</p>
       </div>
+      <PLang />
       <div className={cls["posts"]}>
         <PostComponent
           id={"2"}
