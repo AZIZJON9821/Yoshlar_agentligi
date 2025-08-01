@@ -29,6 +29,7 @@ import LikeIcon from "./like.icon";
 import DisLikeIcon from "./dislike.icon";
 import Button from "../button";
 
+
 interface PostProps {
   id: string | number;
   title: string;
