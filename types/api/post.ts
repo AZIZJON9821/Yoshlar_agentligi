@@ -1,4 +1,6 @@
 import { Category } from "./categories";
+import { Comment } from "./comments";
+import { Like } from "./likes";
 import { User } from "./user";
 
 export interface Post {
