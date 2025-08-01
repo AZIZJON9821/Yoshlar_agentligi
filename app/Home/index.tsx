@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
 
 const HomePage = () => {
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
   const handleLike = (id: string | number) => {
     console.log("Like:", id);
   };
@@ -13,24 +14,35 @@ const HomePage = () => {
     console.log("Dislike:", id);
   };
   const { data: posts } = useGetAllPosts();
-  // console.log(posts);
-  
+  console.log(posts, "dfjvfjd");
+
+  const filteredPosts =
+    selectedCategoryIds.length > 0
+      ? posts?.filter((post) =>
+          post.PostCategory.some((cat) =>
+            selectedCategoryIds.includes(cat.categoryId)
+          )
+        )
+      : posts;
+
+  console.log(filteredPosts);
+
   return (
     <div className="container">
       <div className={cls["wrapper"]}>
-        <PLang />
+        <PLang onSelect={setSelectedCategoryIds} />
         <div className={cls["p"]}>
           <p>Discover the coding world</p>
         </div>
         <div className={cls["posts"]}>
-          {posts?.map((post) => (
+          {filteredPosts?.map((post) => (
             <PostComponent
               id={post.id}
               title={post.title}
               author={post.user.username}
               code={post.code}
               language={post.PostCategory[0].category.name}
-              likes={post.likes.length}
+              likes={post.likes?.length}
               dislikes={1}
               createdAt={post.createdAt}
               onLike={handleLike}

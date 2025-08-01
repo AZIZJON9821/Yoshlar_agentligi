@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import cls from "./lang.module.css";
 import { customAxios } from "@/api";
 
-const LanguageSelector = () => {
+const LanguageSelector = ({onSelect}) => {
   const [languages, setLanguages] = useState([]);
   const [selected, setSelected] = useState([]);
   const containerRef = useRef(null);
@@ -31,6 +31,13 @@ const LanguageSelector = () => {
       const updated = [...selected, lang];
       setSelected(updated);
       console.log("Tanlangan categoryId:", lang.id);
+    }
+
+    console.log(updated,"kjfvhljfhdljfayv")
+
+    setSelected(updated);
+    if (onSelect) {
+      onSelect(updated.map((item) => item.id));
     }
   };
 
