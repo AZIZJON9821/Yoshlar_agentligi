@@ -1,7 +1,9 @@
 import { MainLayout } from "@/layout";
 import "@/styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
+const client = new QueryClient();
 import { AppProvider } from "@/context";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next/client";
@@ -19,11 +21,13 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [router.pathname]);
   return (
-    <AppProvider>
-      <MainLayout>
-        <Component {...pageProps} />
-        <Toaster />
-      </MainLayout>
-    </AppProvider>
+    <QueryClientProvider client={client}>
+      <AppProvider>
+        <MainLayout>
+          <Component {...pageProps} />
+          <Toaster />
+        </MainLayout>
+      </AppProvider>
+    </QueryClientProvider>
   );
 }

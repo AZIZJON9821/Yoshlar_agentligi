@@ -1,7 +1,6 @@
 .scroll-wrapper {
   display: flex;
   align-items: center;
-  padding: 300px;
   background-color: white;
   gap: 4px;
 }

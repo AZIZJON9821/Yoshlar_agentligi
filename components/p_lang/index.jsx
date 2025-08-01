@@ -1,8 +1,5 @@
-
-
-
 import React, { useRef, useState, useEffect } from "react";
-import "./style.css";
+import cls from "./lang.module.css";
 import { customAxios } from "@/api";
 
 const LanguageSelector = () => {
@@ -11,23 +8,29 @@ const LanguageSelector = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    customAxios.get("/languages") 
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setLanguages(data);
+    customAxios
+      .get("/categories")
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setLanguages(res.data);
         } else {
-          console.error("API noto‘g‘ri formatda:", data);
+          console.error("API noto‘g‘ri formatda:", res.data);
         }
       })
       .catch((err) => console.error("API xatosi:", err));
   }, []);
 
   const toggleSelection = (lang) => {
-    if (selected.includes(lang)) {
-      setSelected(selected.filter((item) => item !== lang));
+    const isSelected = selected.some((item) => item.id === lang.id);
+
+    if (isSelected) {
+      const updated = selected.filter((item) => item.id !== lang.id);
+      setSelected(updated);
+      console.log("Tanlanmagan categoryId:", lang.id);
     } else {
-      setSelected([...selected, lang]);
+      const updated = [...selected, lang];
+      setSelected(updated);
+      console.log("Tanlangan categoryId:", lang.id);
     }
   };
 
@@ -36,28 +39,42 @@ const LanguageSelector = () => {
       const scrollAmount = 150;
       containerRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
 
   return (
-    <div className="scroll-wrapper">
-      <button className="scroll-btn" onClick={() => scrollContainer("left")}>❮</button>
+    <div className={cls["scroll-wrapper"]}>
+      <button
+        className={cls["scroll-btn"]}
+        onClick={() => scrollContainer("left")}
+      >
+        ❮
+      </button>
 
-      <div className="container" ref={containerRef}>
+      <div className={cls["container"]} ref={containerRef}>
         {languages.map((lang) => (
           <button
-            key={lang}
-            className={`lang-button ${selected.includes(lang) ? "active" : ""}`}
+            key={lang.id}
+            className={`${cls["lang-button"]} ${
+              selected.some((item) => item.id === lang.id)
+                ? `${cls["acive"]}`
+                : ""
+            }`}
             onClick={() => toggleSelection(lang)}
           >
-            {lang}
+            {lang.name}
           </button>
         ))}
       </div>
 
-      <button className="scroll-btn" onClick={() => scrollContainer("right")}>❯</button>
+      <button
+        className={cls["scroll-btn"]}
+        onClick={() => scrollContainer("right")}
+      >
+        ❯
+      </button>
     </div>
   );
 };

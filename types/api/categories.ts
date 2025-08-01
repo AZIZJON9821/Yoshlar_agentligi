@@ -1,5 +1,7 @@
+import { Post } from "./post";
+
 export interface Category {
-  id: number;
+  id: string;
   name: string;
-  createdAt: string;
 }
+
