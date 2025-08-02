@@ -6,7 +6,6 @@ import React, {
   ReactNode,
 } from "react";
 import { customAxios } from "../api/instances/codeMuseum";
-import { setCookie } from "cookies-next/client";
 
 interface User {
   id: string;
@@ -93,10 +92,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (response.data) {
         const userData: User = {
-          id: response.data.id || "1",
-          username: response.data.username || username,
-          email: response.data.email || `${username}@example.com`,
-          githubURL: response.data.github_username,
+          id: response.data.data.id || "1",
+          username: response.data.data.username || username,
+          email: response.data.data.email || `${username}@example.com`,
+          githubURL: response.data.data.github_username,
         };
 
         setUser(userData);
@@ -134,10 +133,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (response.data) {
         const userData: User = {
-          id: response.data.id || "1",
-          username: response.data.username || username,
-          email: response.data.email || email,
-          githubURL: response.data.github_username || github_username,
+          id: response.data.data.id || "1",
+          username: response.data.data.username || username,
+          email: response.data.data.email || email,
+          githubURL: response.data.data.github_username || github_username,
         };
 
         setUser(userData);

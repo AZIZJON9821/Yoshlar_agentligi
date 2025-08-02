@@ -10,16 +10,19 @@ import { getCookie } from "cookies-next/client";
 import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    if (router.pathname === '/profile') {
-      const userCookies = getCookie('access_token');
-      const userLocalStorage = typeof window !== "undefined" ? localStorage.getItem('user') : null;
-      if (!(!!userCookies && !!userLocalStorage)) {
-        router.push('/auth/login');
-      }
+    if (!router.isReady) return;
+
+    const isProfilePage = router.pathname === "/profile";
+    const token = getCookie("token");
+    const user =
+      typeof window !== "undefined" ? localStorage.getItem("user") : null;
+
+    if (isProfilePage && (!token || !user)) {
+      router.push("/auth/login");
     }
-  }, [router.pathname]);
+  }, [router.isReady, router.pathname]);
   return (
     <QueryClientProvider client={client}>
       <AppProvider>
