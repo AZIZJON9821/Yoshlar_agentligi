@@ -51,7 +51,7 @@ const PostComponent = ({
           text={visible}
           theme={github}
           showLineNumbers
-          copied={false}
+          copied={false ? true : undefined}
         />
         {isLong && (
           <button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
@@ -6,7 +6,6 @@ import { useGetAllPosts } from "@/hook";
 import { customAxios } from "@/api";
 
 const HomePage = () => {
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
   const handleLike = (id: string | number) => {
     const data = { type: "like" };
     customAxios.post(`/posts/${id}/reactions`, data);
@@ -18,15 +17,7 @@ const HomePage = () => {
   };
 
   const { data: posts } = useGetAllPosts();
-
-  const filteredPosts =
-    selectedCategoryIds.length > 0
-      ? posts?.filter((post) =>
-          post.PostCategory.some((cat) =>
-            selectedCategoryIds.includes(cat.categoryId)
-          )
-        )
-      : posts;
+  console.log(posts);
 
   return (
     <div className="container">
@@ -34,10 +25,9 @@ const HomePage = () => {
         <div className={cls["p"]}>
           <p>Discover the coding world</p>
         </div>
-
-        <PLang onSelect={setSelectedCategoryIds} />
+        <PLang />
         <div className={cls["posts"]}>
-          {filteredPosts?.map((post) => (
+          {posts?.map((post) => (
             <PostComponent
               id={post.id}
               title={post.title}

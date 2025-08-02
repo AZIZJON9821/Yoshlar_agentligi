@@ -1,43 +1,60 @@
 import React, { useRef, useState, useEffect } from "react";
 import cls from "./lang.module.css";
-import { customAxios } from "@/api";
+import { customAxios } from "@/api/instances/codeMuseum";
 
-const LanguageSelector = ({ onSelect }) => {
-  const [languages, setLanguages] = useState([]);
+const LanguageSelector = () => {
+  const [languages, setLanguages] = useState({ data: [] });
   const [selected, setSelected] = useState([]);
   const containerRef = useRef(null);
+
+  const fallbackLanguages = {
+    data: [
+      { id: 1, name: "JavaScript" },
+      { id: 2, name: "Python" },
+      { id: 3, name: "Java" },
+      { id: 4, name: "C++" },
+      { id: 5, name: "TypeScript" },
+      { id: 6, name: "React" },
+      { id: 7, name: "Node.js" },
+      { id: 8, name: "PHP" },
+      { id: 9, name: "Ruby" },
+      { id: 10, name: "Go" },
+    ],
+  };
 
   useEffect(() => {
     customAxios
       .get("/categories")
       .then((res) => {
-
-        if (Array.isArray(res.data.data)) {
-          setLanguages(res.data.data);
-        } else {
-          console.error("API noto‘g‘ri formatda:", res.data);
-        }
-
+        console.log("API Response:", res.data);
         setLanguages(res.data);
-
       })
-      .catch((err) => console.error("API xatosi:", err));
+      .catch((err) => {
+        console.error("API xatosi:", err);
+        setLanguages(fallbackLanguages);
+      });
   }, []);
 
   const toggleSelection = (lang) => {
     const isSelected = selected.some((item) => item.id === lang.id);
 
-    let updated;
     if (isSelected) {
-      updated = selected.filter((item) => item.id !== lang.id);
+      const updated = selected.filter((item) => item.id !== lang.id);
+      setSelected(updated);
+      console.log("Tanlanmagan categoryId:", lang.id);
     } else {
-      updated = [...selected, lang];
-    }
+      const updated = [...selected, lang];
+      setSelected(updated);
+      console.log("Tanlangan categoryId:", lang.id);
 
-    setSelected(updated);
-
-    if (onSelect) {
-      onSelect(updated.map((item) => item.id));
+      customAxios
+        .get(`/categories/${lang.id}`)
+        .then((res) => {
+          console.log("Backenddan kelgan ma'lumot:", res.data);
+        })
+        .catch((err) => {
+          console.error("So'rov xatosi:", err);
+        });
     }
   };
 
@@ -51,6 +68,8 @@ const LanguageSelector = ({ onSelect }) => {
     }
   };
 
+  const hasFewButtons = languages.data?.length <= 5;
+
   return (
     <div className={cls["scroll-wrapper"]}>
       <button
@@ -60,15 +79,18 @@ const LanguageSelector = ({ onSelect }) => {
         ❮
       </button>
 
-      <div className={cls["container"]} ref={containerRef}>
+      <div
+        className={`${cls["container"]} ${
+          hasFewButtons ? cls["few-buttons"] : ""
+        }`}
+        ref={containerRef}
+      >
         {languages.data?.map((lang) => (
           <button
             key={lang.id}
             className={`${cls["lang-button"]} ${
-
               selected.some((item) => item.id === lang.id) ? cls["active"] : ""
-
-            }`}
+            } ${hasFewButtons ? cls["stretched"] : ""}`}
             onClick={() => toggleSelection(lang)}
           >
             {lang.name}
