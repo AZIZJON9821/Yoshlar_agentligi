@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import cls from "./lang.module.css";
 import { customAxios } from "@/api/instances/codeMuseum";
+import { useAuth } from "@/context";
 
 const LanguageSelector = () => {
   const [languages, setLanguages] = useState({ data: [] });
-  const [selected, setSelected] = useState([]);
+
+  const { selected, setSelected } = useAuth();
   const containerRef = useRef(null);
 
   const fallbackLanguages = {
@@ -36,15 +38,13 @@ const LanguageSelector = () => {
   }, []);
 
   const toggleSelection = (lang) => {
-    const isSelected = selected.some((item) => item.id === lang.id);
+    const isSelected = selected?.id === lang.id;
 
     if (isSelected) {
-      const updated = selected.filter((item) => item.id !== lang.id);
-      setSelected(updated);
+      setSelected(null);
       console.log("Tanlanmagan categoryId:", lang.id);
     } else {
-      const updated = [...selected, lang];
-      setSelected(updated);
+      setSelected(lang);
       console.log("Tanlangan categoryId:", lang.id);
 
       customAxios
@@ -89,7 +89,7 @@ const LanguageSelector = () => {
           <button
             key={lang.id}
             className={`${cls["lang-button"]} ${
-              selected.some((item) => item.id === lang.id) ? cls["active"] : ""
+              selected?.id === lang.id ? cls["active"] : ""
             } ${hasFewButtons ? cls["stretched"] : ""}`}
             onClick={() => toggleSelection(lang)}
           >
