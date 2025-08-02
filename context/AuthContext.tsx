@@ -85,7 +85,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           email: response.data.email || `${username}@example.com`,
           githubURL: response.data.github_username,
         };
-        setCookie('access_token',response.data.token)
         
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));

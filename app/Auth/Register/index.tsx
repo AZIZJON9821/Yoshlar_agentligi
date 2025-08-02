@@ -58,7 +58,6 @@ const Register = () => {
           name="email"
           variant={InputVariant.input}
           placeholder="Email"
-          required={true}
         />
         <Input
           control={control}
@@ -75,7 +74,6 @@ const Register = () => {
           name="ghUsername"
           variant={InputVariant.input}
           placeholder="GitHub username"
-          required={true}
         />
         <Button type="submit" style={{ width: "100%" }} disabled={isLoading}>
           {isLoading ? "Registering..." : "Submit"}

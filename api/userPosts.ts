@@ -8,6 +8,5 @@ export const getAllUserPosts = async () => {
     return res.data
   } catch (e) {
     console.log(e);
-    toast.error("get posts user failed");
   }
 };

@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
       const userCookies = getCookie('access_token');
       const userLocalStorage = typeof window !== "undefined" ? localStorage.getItem('user') : null;
       if (!(!!userCookies && !!userLocalStorage)) {
-        router.push('auth/login');
+        router.push('/auth/login');
       }
     }
   }, [router.pathname]);
