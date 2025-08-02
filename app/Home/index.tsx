@@ -34,8 +34,8 @@ const HomePage = () => {
               author={post.user.username}
               code={post.code}
               language={post.PostCategory[0].category.name}
-              likes={post?.reactions[0].like}
-              dislikes={post?.reactions[0].dislike}
+              likes={post?.reactions[0]?.like}
+              dislikes={post?.reactions[0]?.dislike}
               createdAt={post.createdAt}
               onLike={handleLike}
               onDislike={handleDislike}
