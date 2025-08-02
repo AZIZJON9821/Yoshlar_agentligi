@@ -5,6 +5,7 @@ import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
 import { customAxios } from "@/api";
 import { useAuth } from "@/context";
+import { getCookie } from "cookies-next";
 
 const HomePage = () => {
   const handleLike = (id: string | number) => {
@@ -16,6 +17,7 @@ const HomePage = () => {
     const data = { type: "dislike" };
     customAxios.post(`/posts/${id}/reactions`, data);
   };
+  console.log("token", getCookie("token"));
   const { selected } = useAuth();
 
   const { data: posts } = useGetAllPosts();

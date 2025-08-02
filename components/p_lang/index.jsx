@@ -28,7 +28,6 @@ const LanguageSelector = () => {
     customAxios
       .get("/categories")
       .then((res) => {
-        console.log("API Response:", res.data);
         setLanguages(res.data);
       })
       .catch((err) => {

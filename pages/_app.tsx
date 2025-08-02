@@ -3,26 +3,35 @@ import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
-const client = new QueryClient();
 import { AppProvider } from "@/context";
 import { useRouter } from "next/router";
-import { getCookie } from "cookies-next/client";
-import { useEffect } from "react";
+import { getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+
+const client = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
-    if (!router.isReady) return;
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient || !router.isReady) return;
 
     const isProfilePage = router.pathname === "/profile";
     const token = getCookie("token");
-    const user =
-      typeof window !== "undefined" ? localStorage.getItem("user") : null;
+    const user = localStorage.getItem("user");
+    console.log(user);
+    console.log(token);
 
     if (isProfilePage && (!token || !user)) {
       router.push("/auth/login");
     }
-  }, [router.isReady, router.pathname]);
+  }, [isClient, router.isReady, router.pathname]);
+
   return (
     <QueryClientProvider client={client}>
       <AppProvider>
