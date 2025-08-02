@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { AuthProvider } from './AuthContext';
 
 interface AppProviderProps {
@@ -6,6 +6,7 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+  
   return (
     <AuthProvider>
         {children}

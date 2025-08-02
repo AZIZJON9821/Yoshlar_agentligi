@@ -13,6 +13,5 @@ export const getAllUserReactions = async () => {
     return reactions;
   } catch (e) {
     console.log(e);
-    toast.error("get posts user failed");
   }
 };
