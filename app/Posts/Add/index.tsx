@@ -6,8 +6,14 @@ import CodeEditor from "@/components/code-editor";
 import Button from "@/components/button";
 import styles from "./add.post.module.css";
 import { InputVariant } from "@/types";
-import { customAxios } from "@/api/instances/codeMuseum";
-import { Category, FormData } from "./types";
+import { FormData } from "./types";
+
+const LANGUAGES = [
+  { value: "#python", label: "Python" },
+  { value: "#js", label: "JavaScript" },
+  { value: "#ts", label: "TypeScript" },
+  { value: "#cpp", label: "C++" },
+];
 
 const AddPost: React.FC = () => {
   const {
@@ -140,12 +146,11 @@ const AddPost: React.FC = () => {
         </div>
 
         <div className={styles.editorWrapper}>
-          <CodeEditor name="code" control={control} style={{width:"100%"}}/>
-          {errors.code && (
-            <p className={styles.errorText}>
-              {(errors.code as any)?.message || "Code kerak"}
-            </p>
-          )}
+          <CodeEditor
+            name="code"
+            control={control}
+            style={{ minHeight: 200 }}
+          />
         </div>
 
         <div className={styles.actions}>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { CopyBlock, github } from "react-code-blocks";
 
-import cls from "./PostComponet.module.css";
 import LikeIcon from "./like.icon";
 import DisLikeIcon from "./dislike.icon";
 import Button from "../button";
 import CommentsModal from "../Modal";
+import cls from "./post.component.module.css";
 
 interface PostProps {
   id: string | number;
@@ -40,12 +40,12 @@ const PostComponent = ({
       </div>
       <div className={cls["post-content"]}>
         <CopyBlock
-          language={language}
+          language={language.toLowerCase()}
           text={code}
           theme={github}
           showLineNumbers
+          copied={false}
         />
-       
       </div>
       <div className={cls["post-footer"]}>
         <div>
