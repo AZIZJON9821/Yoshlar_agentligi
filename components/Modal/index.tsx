@@ -10,10 +10,15 @@ interface CommentsModalProps {
 }
 
 interface CommentType {
-  id: number;
+  id: string;
   message: string;
-  userName?: string;
-  createdAt?: string;
+  createdAt: string;
+  postId: string;
+  userId: string;
+  user: {
+    id: string;
+    username: string;
+  };
 }
 
 const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
@@ -21,7 +26,6 @@ const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
   const [comments, setComments] = useState<CommentType[]>([]);
 
   const user = JSON.parse(localStorage.getItem("user") as string);
-  console.log("bu userid", user.id);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -67,7 +71,7 @@ const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
                 <div className={styles.commentItem} key={item.id || index}>
                   <UserIcon width={24} height={24} className={styles.icon} />
                   <div className={styles.commentText}>
-                    <h4>{item.userName || "Anonymous"}</h4>
+                    <h4>{item.user.username || "Anonymous"}</h4>
                     <p>{item.message}</p>
                     {item.createdAt && (
                       <span className={styles.time}>
