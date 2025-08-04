@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import UserIcon from "./icons/user.icon";
 import styles from "./Modal.module.css";
-import { leaveComment, getAllComments } from "@/api";
 import Cookies from "js-cookie";
+import { getAllComments, leaveComment } from "@/api/comments";
 
 interface CommentsModalProps {
   onClose: () => void;
@@ -20,8 +20,8 @@ const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState<CommentType[]>([]);
 
-  const userId = Cookies.get("userId");
-  console.log("bu userid", userId);
+  const user = JSON.parse(localStorage.getItem("user") as string);
+  console.log("bu userid", user.id);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -33,12 +33,12 @@ const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
 
   const handlePost = async () => {
     const trimmed = commentText.trim();
-    if (!trimmed || !userId) return;
+    if (!trimmed || !user.id) return;
 
     const res = await leaveComment({
       postId,
       message: trimmed,
-      userId: "",
+      userId: user.id,
     });
 
     if (res) {
