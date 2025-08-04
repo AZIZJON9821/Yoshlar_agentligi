@@ -35,4 +35,3 @@ export const getAllComments = async (postId: number | string) => {
     console.error("Error fetching comments:", error);
     return [];
   }
-};
