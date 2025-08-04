@@ -1,12 +1,12 @@
 import { MainLayout } from "@/layout";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import { AppProvider } from "@/context";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
-import type { AppProps } from "next/app";
 
 const client = new QueryClient();
 
@@ -20,11 +20,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (!isClient || !router.isReady) return;
+
     const isProfilePage = router.pathname === "/profile";
-    const token = getCookie("token");
     const user = localStorage.getItem("user");
 
-    if (isProfilePage && (!token || !user)) {
+    if (isProfilePage && !user) {
       router.push("/auth/login");
     }
   }, [isClient, router.isReady, router.pathname]);
