@@ -3,38 +3,49 @@ import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
+import { customAxios } from "@/api";
+import { useAuth } from "@/context";
 
 const HomePage = () => {
   const handleLike = (id: string | number) => {
-    console.log("Like:", id);
+    const data = { type: "like" };
+    customAxios.post(`/posts/${id}/reactions`, data);
   };
 
   const handleDislike = (id: string | number) => {
-    console.log("Dislike:", id);
+    const data = { type: "dislike" };
+    customAxios.post(`/posts/${id}/reactions`, data);
   };
+  const { selected } = useAuth();
+
   const { data: posts } = useGetAllPosts();
-  console.log(posts);
-  
+
+  let filtered = selected?.id
+    ? posts?.filter((el) =>
+        el.PostCategory[0].category.id.includes(selected?.id)
+      )
+    : posts;
+
   return (
     <div className="container">
       <div className={cls["wrapper"]}>
-        <PLang />
         <div className={cls["p"]}>
           <p>Discover the coding world</p>
         </div>
+        <PLang />
         <div className={cls["posts"]}>
-          {posts?.map((post) => (
+          {filtered?.map((post) => (
             <PostComponent
               id={post.id}
               title={post.title}
               author={post.user.username}
               code={post.code}
-              language={post.PostCategory[0].category.name}
-              likes={post.likes.length}
-              dislikes={1}
+              language={post.PostCategory[0].category.name || "Unknown"}
+              likes={post?.reactions[0]?.like || 0}
+              dislikes={post?.reactions[0]?.dislike || 0}
               createdAt={post.createdAt}
-              onLike={handleLike}
-              onDislike={handleDislike}
+              onLike={() => handleLike(post.id)}
+              onDislike={() => handleDislike(post.id)}
               key={post.id}
             />
           ))}
