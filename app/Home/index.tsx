@@ -7,14 +7,15 @@ import { customAxios } from "@/api";
 import { useAuth } from "@/context";
 
 const HomePage = () => {
-  const handleLike = (id: string | number) => {
+  const handleLike = async (id: string | number) => {
     const data = { type: "like" };
-    customAxios.post(`/posts/${id}/reactions`, data);
+    await customAxios.post(`/posts/${id}/reactions`, data);
   };
 
-  const handleDislike = (id: string | number) => {
+  const handleDislike = async(id: string | number) => {
     const data = { type: "dislike" };
-    customAxios.post(`/posts/${id}/reactions`, data);
+    const response = await customAxios.post(`/posts/${id}/reactions`, data);
+    console.log(response.data)
   };
   const { selected } = useAuth();
 
