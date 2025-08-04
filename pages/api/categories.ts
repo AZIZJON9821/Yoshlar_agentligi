@@ -26,7 +26,6 @@ export default async function handler(
       },
     });
 
-    console.log("Response received:", response.status);
     res.status(200).json(response.data);
   } catch (error) {
     console.error("API Error:", error);

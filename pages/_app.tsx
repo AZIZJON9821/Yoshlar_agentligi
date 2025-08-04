@@ -23,10 +23,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
     const isProfilePage = router.pathname === "/profile";
     const user = localStorage.getItem("user");
-    const token = getCookie("token")
+    const token = getCookie("token");
 
-
-    if (isProfilePage && (!user || !token)) {
+    if (isProfilePage && !user) {
       router.push("/auth/login");
     }
   }, [isClient, router.isReady, router.pathname]);

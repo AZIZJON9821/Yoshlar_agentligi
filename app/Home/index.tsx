@@ -9,7 +9,7 @@ import { useAuth } from "@/context";
 const HomePage = () => {
   const handleLike = async (id: string | number) => {
     const data = { type: "like" };
-    await customAxios.post(`/posts/${id}/reactions`);
+    await customAxios.post(`/posts/${id}/reactions`,  data);
   };
 
   const handleDislike = async(id: string | number) => {
