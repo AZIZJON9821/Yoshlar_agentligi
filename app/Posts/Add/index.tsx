@@ -36,6 +36,8 @@ const AddPost: React.FC = () => {
     },
   });
 
+  
+
   const anonymous = useWatch({ control, name: "anonymous" });
   const [categories, setCategories] = useState<Category[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
