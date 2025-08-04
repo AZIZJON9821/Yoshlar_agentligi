@@ -9,7 +9,7 @@ export const getAllUserReactions = async () => {
     const { data: dislikes } = await customAxios.get(
       `/users/my-reactions?limit=100?type='dislike'`
     );
-    const reactions=[...likes,...dislikes]
+    const reactions=[...likes.data,...dislikes.data]
     return reactions;
   } catch (e) {
     console.log(e);

@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { customAxios } from "../api/instances/codeMuseum";
+import { setCookie } from "cookies-next";
 
 interface User {
   id: string;
@@ -97,6 +98,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           email: response.data.data.email || `${username}@example.com`,
           githubURL: response.data.data.github_username,
         };
+        setCookie('token', response.data.token)
 
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
@@ -124,6 +126,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }: RegisterRequest) => {
     setIsLoading(true);
     try {
+      email = email ? email : null
+      github_username = github_username ? github_username : null
       const response = await customAxios.post("/auth/register", {
         username,
         email,
@@ -138,7 +142,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           email: response.data.data.email || email,
           githubURL: response.data.data.github_username || github_username,
         };
-
+        console.log(response.data);
+        
+        setCookie('token', response.data.token)
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
       } else {
@@ -163,5 +169,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setSelected,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+}; 

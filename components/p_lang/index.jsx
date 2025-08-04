@@ -24,17 +24,17 @@ const LanguageSelector = () => {
     ],
   };
 
-  useEffect(() => {
-    customAxios
-      .get("/categories")
-      .then((res) => {
-        setLanguages(res.data);
-      })
-      .catch((err) => {
-        console.error("API xatosi:", err);
-        setLanguages(fallbackLanguages);
-      });
-  }, []);
+  // useEffect(() => {
+  //   customAxios
+  //     ?.get("/categories")
+  //     .then((res) => {
+  //       setLanguages(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("API xatosi:", err);
+  //       setLanguages(fallbackLanguages);
+  //     });
+  // }, []);
 
   const toggleSelection = (lang) => {
     const isSelected = selected?.id === lang.id;
@@ -79,17 +79,15 @@ const LanguageSelector = () => {
       </button>
 
       <div
-        className={`${cls["container"]} ${
-          hasFewButtons ? cls["few-buttons"] : ""
-        }`}
+        className={`${cls["container"]} ${hasFewButtons ? cls["few-buttons"] : ""
+          }`}
         ref={containerRef}
       >
         {languages.data?.map((lang) => (
           <button
             key={lang.id}
-            className={`${cls["lang-button"]} ${
-              selected?.id === lang.id ? cls["active"] : ""
-            } ${hasFewButtons ? cls["stretched"] : ""}`}
+            className={`${cls["lang-button"]} ${selected?.id === lang.id ? cls["active"] : ""
+              } ${hasFewButtons ? cls["stretched"] : ""}`}
             onClick={() => toggleSelection(lang)}
           >
             {lang.name}
