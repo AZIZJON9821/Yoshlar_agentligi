@@ -9,6 +9,7 @@ interface CommentProps {
 
 export const leaveComment = async (payload: CommentProps) => {
   try {
+  console.log(payload)
     const response = await customAxios.post(
       `/posts/${payload.postId}/comment`,
       payload
@@ -25,18 +26,13 @@ export const getAllComments = async (postId: number | string) => {
     const response = await customAxios.get(`/posts/${postId}/comments`);
     const data = response.data;
 
-    // 🔐 MUHIM: return faqat massiv bo‘lsa
     if (Array.isArray(data)) {
       return data;
     } else {
-      return []; // agar massiv bo‘lmasa, bo‘sh massiv
+      return []; 
     }
-<<<<<<< HEAD
-};
-=======
   } catch (error) {
     console.error("Error fetching comments:", error);
     return [];
   }
 };
->>>>>>> 7e68c4da81ecdedac463b090cef0d483244d5214
