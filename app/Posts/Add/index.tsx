@@ -1,4 +1,3 @@
-// AddPost.tsx
 import React, { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import Input from "@/components/Input";
@@ -6,14 +5,19 @@ import CodeEditor from "@/components/code-editor";
 import Button from "@/components/button";
 import styles from "./add.post.module.css";
 import { InputVariant } from "@/types";
-import { FormData } from "./types";
+import { customAxios } from "@/api/instances/codeMuseum";
 
-const LANGUAGES = [
-  { value: "#python", label: "Python" },
-  { value: "#js", label: "JavaScript" },
-  { value: "#ts", label: "TypeScript" },
-  { value: "#cpp", label: "C++" },
-];
+export interface FormData {
+  title: string;
+  code: string;
+  categoryName: string;
+  anonymous: boolean;
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
 
 const AddPost: React.FC = () => {
   const {
@@ -26,10 +30,8 @@ const AddPost: React.FC = () => {
   } = useForm<FormData>({
     defaultValues: {
       title: "",
-      language: "#js",
       code: "",
-      categoryId: "JAVASCRIPT",
-      author: "",
+      categoryName: "",
       anonymous: true,
     },
   });
@@ -38,23 +40,24 @@ const AddPost: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   useEffect(() => {
-    if (anonymous) {
-      setValue("author", "");
-    }
-  }, [anonymous, setValue]);
+  }, [anonymous]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const resp = await customAxios.get("/categories");
         const data = resp.data?.data;
-        console.log(resp);
         if (Array.isArray(data)) {
           setCategories(data);
         }
       } catch (e) {
         console.warn("Category fetch failed, using fallback", e);
+        setCategories([
+          { id: "javascript", name: "JavaScript" },
+          { id: "python", name: "Python" },
+        ]);
       }
     };
     fetchCategories();
@@ -62,16 +65,16 @@ const AddPost: React.FC = () => {
 
   const validate = (values: FormData) => {
     let valid = true;
-    if (!values.title.trim()) {
+    if (!values.title?.trim()) {
       setError("title", { type: "required", message: "Title kerak" });
       valid = false;
     }
-    if (!values.code.trim()) {
+    if (!values.code?.trim()) {
       setError("code", { type: "required", message: "Code kerak" });
       valid = false;
     }
-    if (!values.categoryId) {
-      setError("categoryId", {
+    if (!values.categoryName?.trim()) {
+      setError("categoryName", {
         type: "required",
         message: "Category tanlanishi kerak",
       });
@@ -84,31 +87,25 @@ const AddPost: React.FC = () => {
     setSubmitError(null);
     setSuccessMessage(null);
 
-    const isValid = validate(data);
-    if (!isValid) return;
+    if (!validate(data)) return;
 
-    const payload: Record<string, any> = {
+    const payload = {
       title: data.title,
       code: data.code,
-      categoryId: data.categoryId,
-      language: data.language,
-      anonymous: data.anonymous,
-      author: data.anonymous ? "" : data.author,
+      categoryName: data.categoryName.toUpperCase(),
     };
 
+    const endpoint = data.anonymous ? "/posts/anonymous" : "/posts";
+
     try {
-      const res = await customAxios.post("/posts", payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const res = await customAxios.post(endpoint, payload, {
+        headers: { "Content-Type": "application/json" },
       });
       setSuccessMessage("Post muvaffaqiyatli jo'natildi.");
       reset({
         title: "",
         code: "",
-        categoryId: "JAVASCRIPT",
-        language: "#python",
-        author: "",
+        categoryName: "",
         anonymous: true,
       });
       console.log("API response:", res.data);
@@ -119,7 +116,6 @@ const AddPost: React.FC = () => {
       );
     }
   };
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form} noValidate>
@@ -133,36 +129,29 @@ const AddPost: React.FC = () => {
             placeholder="Title"
             control={control}
           />
-        </div>
-
-        <div className={styles.row}>
           <Input
-            name="categoryId"
+            name="categoryName"
             variant={InputVariant.select}
-            options={categories.map((c) => ({ value: c.id, label: c.name }))}
+            options={categories.map((c) => ({
+              value: c.name.toUpperCase(),
+              label: c.name,
+            }))}
             placeholder="Category"
             control={control}
           />
         </div>
 
         <div className={styles.editorWrapper}>
-          <CodeEditor
-            name="code"
-            control={control}
-            style={{ minHeight: 200 }}
-          />
+          <CodeEditor name="code" control={control} style={{ width: "100%" }} />
+          {errors.code && (
+            <p className={styles.errorText}>
+              {(errors.code as any)?.message || "Code kerak"}
+            </p>
+          )}
         </div>
 
         <div className={styles.actions}>
           <div className={styles.leftGroup}>
-            <Input
-              variant={InputVariant.input}
-              name="author"
-              placeholder="Author name"
-              control={control}
-              disabled={!!anonymous}
-            />
-
             <label className={styles.checkbox}>
               <input
                 type="checkbox"
@@ -190,9 +179,9 @@ const AddPost: React.FC = () => {
               {(errors.title as any)?.message || "Title kerak"}
             </div>
           )}
-          {errors.categoryId && (
+          {errors.categoryName && (
             <div className={styles.fieldError}>
-              {(errors.categoryId as any)?.message || "Category kerak"}
+              {(errors.categoryName as any)?.message || "Category kerak"}
             </div>
           )}
         </div>
