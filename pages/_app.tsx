@@ -22,12 +22,9 @@ export default function App({ Component, pageProps }: AppProps) {
     if (!isClient || !router.isReady) return;
 
     const isProfilePage = router.pathname === "/profile";
-    const token = getCookie("token");
     const user = localStorage.getItem("user");
-    console.log(user);
-    console.log(token);
 
-    if (isProfilePage && (!token || !user)) {
+    if (isProfilePage && !user) {
       router.push("/auth/login");
     }
   }, [isClient, router.isReady, router.pathname]);

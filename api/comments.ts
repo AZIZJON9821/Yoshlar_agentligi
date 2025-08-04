@@ -25,11 +25,10 @@ export const getAllComments = async (postId: number | string) => {
     const response = await customAxios.get(`/posts/${postId}/comments`);
     const data = response.data;
 
-    // 🔐 MUHIM: return faqat massiv bo‘lsa
     if (Array.isArray(data)) {
       return data;
     } else {
-      return []; // agar massiv bo‘lmasa, bo‘sh massiv
+      return []; 
     }
   } catch (error) {
     console.error("Error fetching comments:", error);

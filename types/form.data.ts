@@ -1,7 +1,10 @@
-export type FormData = {
-    title: string;
-    language: string;
-    code: string;
-    author: string;
-    anonymous: boolean;
-};
+export interface FormData {
+  title: string;
+  code: string;
+  categoryName: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+}
