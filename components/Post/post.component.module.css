@@ -23,6 +23,7 @@
   background-color: #fff;
   border-radius: 8px;
   overflow-x: auto;
+  position: relative;
 }
 
 .post-footer {
@@ -48,4 +49,31 @@
   gap: 10px;
   font-size: 10px;
   font-weight: 500;
+  align-items: center;
+}
+.author-name {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.created-date {
+  color: gray;
+  font-size: 10px;
+}
+.toggle-button {
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 4px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  
+}
+
+.toggle-button:hover{
+  opacity: 0.5;
 }
