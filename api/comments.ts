@@ -11,7 +11,7 @@ export const leaveComment = async (payload: CommentProps) => {
   try {
   console.log(payload)
     const response = await customAxios.post(
-      `/posts/${payload.postId}/comment`,
+      `/posts/${payload.postId}/comments`,
       payload
     );
     return response.data;
@@ -35,3 +35,4 @@ export const getAllComments = async (postId: number | string) => {
     console.error("Error fetching comments:", error);
     return [];
   }
+}
