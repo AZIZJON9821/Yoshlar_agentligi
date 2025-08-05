@@ -1,21 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
 import { customAxios } from "@/api";
 import { useAuth } from "@/context";
+import { Post } from "@/types";
 
 const HomePage = () => {
-  const handleLike = async (id: string | number) => {
-    const data = { type: "like" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
-  };
-
-  const handleDislike = async (id: string | number) => {
-    const data = { type: "dislike" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
-  };
   const { selected } = useAuth();
 
   const { data: posts } = useGetAllPosts();
@@ -25,6 +17,16 @@ const HomePage = () => {
         el.PostCategory[0].category.id.includes(selected?.id)
       )
     : posts;
+
+  const handleLike = async (id: string | number) => {
+    const data = { type: "like" };
+    await customAxios.post(`/posts/${id}/reactions`, data);
+  };
+
+  const handleDislike = async (id: string | number) => {
+    const data = { type: "dislike" };
+    await customAxios.post(`/posts/${id}/reactions`, data);
+  };
 
   return (
     <div className="container">
