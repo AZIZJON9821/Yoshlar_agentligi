@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { customAxios } from "../api/instances/codeMuseum";
 import { setCookie } from "cookies-next";
+import { Selected } from "@/types";
 
 interface User {
   id: string;
@@ -40,8 +41,8 @@ interface AuthContextType {
     password,
     github_username,
   }: RegisterRequest) => Promise<void>;
-  selected: string | any;
-  setSelected: React.Dispatch<React.SetStateAction<string | any>>;
+  selected: Selected[];
+  setSelected: React.Dispatch<React.SetStateAction<Selected[]>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -61,7 +62,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<Selected[]>([]);
 
   const isAuthenticated = !!user;
 
@@ -98,7 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           email: response.data.data.email || `${username}@example.com`,
           githubURL: response.data.data.github_username,
         };
-        setCookie('token', response.data.token)
+        setCookie("token", response.data.token);
 
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
@@ -126,8 +127,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }: RegisterRequest) => {
     setIsLoading(true);
     try {
-      email = email ? email : null
-      github_username = github_username ? github_username : null
+      email = email ? email : null;
+      github_username = github_username ? github_username : null;
       const response = await customAxios.post("/auth/register", {
         username,
         email,
@@ -143,8 +144,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           githubURL: response.data.data.github_username || github_username,
         };
         console.log(response.data);
-        
-        setCookie('token', response.data.token)
+
+        setCookie("token", response.data.token);
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
       } else {
@@ -169,9 +170,5 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setSelected,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-}; 
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

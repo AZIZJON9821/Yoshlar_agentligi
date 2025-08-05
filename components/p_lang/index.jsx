@@ -1,59 +1,25 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import cls from "./lang.module.css";
-import { customAxios } from "@/api/instances/codeMuseum";
 import { useAuth } from "@/context";
+import { useCategories } from "@/hook/useCategories";
+import { useRouter } from "next/router";
 
 const LanguageSelector = () => {
-  const [languages, setLanguages] = useState({ data: [] });
+  const router = useRouter();
 
   const { selected, setSelected } = useAuth();
   const containerRef = useRef(null);
-
-  const fallbackLanguages = {
-    data: [
-      { id: 1, name: "JavaScript" },
-      { id: 2, name: "Python" },
-      { id: 3, name: "Java" },
-      { id: 4, name: "C++" },
-      { id: 5, name: "TypeScript" },
-      { id: 6, name: "React" },
-      { id: 7, name: "Node.js" },
-      { id: 8, name: "PHP" },
-      { id: 9, name: "Ruby" },
-      { id: 10, name: "Go" },
-    ],
-  };
-
-  // useEffect(() => {
-  //   customAxios
-  //     ?.get("/categories")
-  //     .then((res) => {
-  //       setLanguages(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error("API xatosi:", err);
-  //       setLanguages(fallbackLanguages);
-  //     });
-  // }, []);
+  const { data: languages } = useCategories();
 
   const toggleSelection = (lang) => {
-    const isSelected = selected?.id === lang.id;
+    const isSelected = selected.some((item) => item.id === lang.id);
 
     if (isSelected) {
-      setSelected(null);
-      console.log("Tanlanmagan categoryId:", lang.id);
+      const updatedSelection = selected.filter((item) => item.id !== lang.id);
+      setSelected(updatedSelection);
     } else {
-      setSelected(lang);
-      console.log("Tanlangan categoryId:", lang.id);
-
-      customAxios
-        .get(`/categories/${lang.id}`)
-        .then((res) => {
-          console.log("Backenddan kelgan ma'lumot:", res.data);
-        })
-        .catch((err) => {
-          console.error("So'rov xatosi:", err);
-        });
+      const updatedSelection = [...selected, lang];
+      setSelected(updatedSelection);
     }
   };
 
@@ -67,7 +33,7 @@ const LanguageSelector = () => {
     }
   };
 
-  const hasFewButtons = languages.data?.length <= 5;
+  const hasFewButtons = languages?.length <= 4;
 
   return (
     <div className={cls["scroll-wrapper"]}>
@@ -79,15 +45,17 @@ const LanguageSelector = () => {
       </button>
 
       <div
-        className={`${cls["container"]} ${hasFewButtons ? cls["few-buttons"] : ""
-          }`}
+        className={`${cls["container"]} ${
+          hasFewButtons ? cls["few-buttons"] : ""
+        }`}
         ref={containerRef}
       >
-        {languages.data?.map((lang) => (
+        {languages?.map((lang) => (
           <button
             key={lang.id}
-            className={`${cls["lang-button"]} ${selected?.id === lang.id ? cls["active"] : ""
-              } ${hasFewButtons ? cls["stretched"] : ""}`}
+            className={`${cls["lang-button"]} ${
+              selected.some((item) => item.id === lang.id) ? cls["active"] : ""
+            } ${hasFewButtons ? cls["stretched"] : ""}`}
             onClick={() => toggleSelection(lang)}
           >
             {lang.name}

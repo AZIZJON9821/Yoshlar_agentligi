@@ -5,7 +5,6 @@ import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import { AppProvider } from "@/context";
 import { useRouter } from "next/router";
-import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 
 const client = new QueryClient();
@@ -23,7 +22,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
     const isProfilePage = router.pathname === "/profile";
     const user = localStorage.getItem("user");
-    const token = getCookie("token");
 
     if (isProfilePage && !user) {
       router.push("/auth/login");

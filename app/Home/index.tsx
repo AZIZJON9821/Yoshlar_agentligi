@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
 import { customAxios } from "@/api";
 import { useAuth } from "@/context";
-import { Post } from "@/types";
 
 const HomePage = () => {
   const { selected } = useAuth();
 
+
   const { data: posts } = useGetAllPosts();
 
-  let filtered = selected?.id
-    ? posts?.filter((el) =>
-        el.PostCategory[0].category.id.includes(selected?.id)
+  let filtered = selected?.length
+  ? posts?.filter((post) =>
+      post.PostCategory?.some((cat) =>
+        selected?.some((sel) => sel.id ==  cat.category.id)
       )
-    : posts;
+    )
+  : posts;
 
   const handleLike = async (id: string | number) => {
     const data = { type: "like" };
