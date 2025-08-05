@@ -3,11 +3,11 @@ import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
-import { customAxios } from "@/api";
 import { useAuth } from "@/context";
+import { useReactionMutate } from "@/hook/useReaction";
 
 const HomePage = () => {
-  const { selected } = useAuth();
+  const {selected} = useAuth();
 
 
   const { data: posts } = useGetAllPosts();
@@ -20,15 +20,17 @@ const HomePage = () => {
     )
   : posts;
 
-  const handleLike = async (id: string | number) => {
-    const data = { type: "like" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
+
+  const reactionAction = useReactionMutate();
+
+  const handleLike = (id: string) => {
+    reactionAction.mutate({id, type: "like"})
   };
 
-  const handleDislike = async (id: string | number) => {
-    const data = { type: "dislike" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
+  const handleDislike = (id: string) => {
+    reactionAction.mutate({id, type: "dislike"})
   };
+
 
   return (
     <div className="container">
@@ -36,7 +38,7 @@ const HomePage = () => {
         <div className={cls["p"]}>
           <p>Discover the coding world</p>
         </div>
-        <PLang />
+        <PLang/>
         <div className={cls["posts"]}>
           {filtered?.map((post) => (
             <PostComponent
