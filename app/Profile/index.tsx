@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import cls from "./profile.module.css";
-import { DislikeIcon, LikeIcon, UserIcon } from "./icons";
-import Button from "@/components/button";
+import {UserIcon } from "./icons";
 import { useUserPosts, useUserReactions } from "@/hook";
 import { useRouter } from "next/router";
 import PostComponent from "@/components/Post";
-import { customAxios } from "@/api";
+import { useReactionMutate } from "@/hook/useReaction";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<"posts" | "reactions">("posts");
@@ -14,9 +13,7 @@ const Profile = () => {
 
   const { data: userPosts = [] } = useUserPosts();
   const { data: userReactions = [] } = useUserReactions();
-  console.log(useUserReactions);
-  
-  console.log(userPosts);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -33,15 +30,16 @@ const Profile = () => {
       }
     }
   }, []);
-  const handleLike = async (id: string | number) => {
-    const data = { type: "like" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
+  const reactionAction = useReactionMutate();
+
+  const handleLike = (id: string) => {
+    reactionAction.mutate({ id, type: "like" });
   };
 
-  const handleDislike = async (id: string | number) => {
-    const data = { type: "dislike" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
+  const handleDislike = (id: string) => {
+    reactionAction.mutate({ id, type: "dislike" });
   };
+
   if (!user) return null;
 
   return (
@@ -65,8 +63,9 @@ const Profile = () => {
             My posts
           </button>
           <button
-            className={`${cls.tab} ${activeTab === "reactions" ? cls.active : ""
-              }`}
+            className={`${cls.tab} ${
+              activeTab === "reactions" ? cls.active : ""
+            }`}
             onClick={() => setActiveTab("reactions")}
           >
             My reactions
@@ -100,7 +99,9 @@ const Profile = () => {
               title={reaction.Post.title}
               author={reaction.Post.user.username}
               code={reaction.Post.code}
-              language={reaction.Post.PostCategory[0].category.name|| "Unknown"}
+              language={
+                reaction.Post.PostCategory[0].category.name || "Unknown"
+              }
               likes={reaction.like || 0}
               dislikes={reaction.dislike || 0}
               createdAt={reaction.createdAt}

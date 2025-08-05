@@ -39,6 +39,7 @@ const HomePage = () => {
           <p>Discover the coding world</p>
         </div>
         <PLang/>
+        {filtered?.length ? null : <p>No codes yet ...</p>}
         <div className={cls["posts"]}>
           {filtered?.map((post) => (
             <PostComponent
