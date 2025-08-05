@@ -8,6 +8,7 @@ import styles from "./add.post.module.css";
 import { InputVariant } from "@/types";
 import { useCategories } from "@/hook/useCategories";
 import { useSubmitPost } from "@/hook/useSubmitPost";
+import { useRouter } from "next/router";
 
 interface IUser {
   id: string;
@@ -24,6 +25,7 @@ export interface FormData {
 }
 
 const AddPost: React.FC = () => {
+  const router= useRouter()
   const {
     control,
     handleSubmit,
@@ -117,6 +119,7 @@ const AddPost: React.FC = () => {
             categoryName: "",
             anonymous: true,
           });
+          router.push('/')
         },
         onError: (err: any) => {
           const message =
