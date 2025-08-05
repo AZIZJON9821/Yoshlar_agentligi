@@ -4,15 +4,16 @@ import { customAxios } from "./instances";
 interface CommentProps {
   postId: number | string;
   message: string;
-  userId: number | string;
 }
 
 export const leaveComment = async (payload: CommentProps) => {
   try {
-    console.log(payload);
+    const message = {
+      message: payload.message,
+    };
     const response = await customAxios.post(
       `/posts/${payload.postId}/comments`,
-      payload
+      message
     );
     return response.data.data;
   } catch (error) {

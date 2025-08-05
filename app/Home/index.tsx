@@ -9,14 +9,12 @@ import { useAuth } from "@/context";
 const HomePage = () => {
   const handleLike = async (id: string | number) => {
     const data = { type: "like" };
-    await customAxios.post(`/posts/${id}/reactions`,  data);
+    await customAxios.post(`/posts/${id}/reactions`, data);
   };
 
-  const handleDislike = async(id: string | number) => {
-    console.log(id)
+  const handleDislike = async (id: string | number) => {
     const data = { type: "dislike" };
-    const response = await customAxios.post(`/posts/${id}/reactions`, data);
-    console.log("resonse", response.data)
+    await customAxios.post(`/posts/${id}/reactions`, data);
   };
   const { selected } = useAuth();
 
@@ -43,8 +41,8 @@ const HomePage = () => {
               author={post.user.username}
               code={post.code}
               language={post.PostCategory[0].category.name || "Unknown"}
-              likes={post?.reactions[0]?.like || 0}
-              dislikes={post?.reactions[0]?.dislike || 0}
+              likes={post.reactions[0]?.like || 0}
+              dislikes={post.reactions[0]?.dislike || 0}
               createdAt={post.createdAt}
               onLike={() => handleLike(post.id)}
               onDislike={() => handleDislike(post.id)}

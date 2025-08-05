@@ -41,8 +41,7 @@ const CommentsModal = ({ onClose, postId }: CommentsModalProps) => {
 
     const res = await leaveComment({
       postId,
-      message: trimmed,
-      userId: user.id,
+      message: trimmed
     });
 
     if (res) {
