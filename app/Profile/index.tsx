@@ -4,6 +4,8 @@ import { DislikeIcon, LikeIcon, UserIcon } from "./icons";
 import Button from "@/components/button";
 import { useUserPosts, useUserReactions } from "@/hook";
 import { useRouter } from "next/router";
+import PostComponent from "@/components/Post";
+import { customAxios } from "@/api";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<"posts" | "reactions">("posts");
@@ -12,8 +14,10 @@ const Profile = () => {
 
   const { data: userPosts = [] } = useUserPosts();
   const { data: userReactions = [] } = useUserReactions();
-  console.log(userPosts);
+  console.log(useUserReactions);
   
+  console.log(userPosts);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("user");
@@ -29,7 +33,15 @@ const Profile = () => {
       }
     }
   }, []);
+  const handleLike = async (id: string | number) => {
+    const data = { type: "like" };
+    await customAxios.post(`/posts/${id}/reactions`, data);
+  };
 
+  const handleDislike = async (id: string | number) => {
+    const data = { type: "dislike" };
+    await customAxios.post(`/posts/${id}/reactions`, data);
+  };
   if (!user) return null;
 
   return (
@@ -53,9 +65,8 @@ const Profile = () => {
             My posts
           </button>
           <button
-            className={`${cls.tab} ${
-              activeTab === "reactions" ? cls.active : ""
-            }`}
+            className={`${cls.tab} ${activeTab === "reactions" ? cls.active : ""
+              }`}
             onClick={() => setActiveTab("reactions")}
           >
             My reactions
@@ -67,92 +78,36 @@ const Profile = () => {
       <div className={cls["posts-list"]}>
         {activeTab === "posts" &&
           userPosts.map((post) => (
-            <div key={post.id} className={cls["post-card"]}>
-              <div className={cls["post-header"]}>
-                {post.title} | <span>#js</span>
-              </div>
-              <div
-                style={{
-                  width: "843px",
-                  height: "148px",
-                  marginBottom: "14px",
-                  backgroundColor: "#ffffff",
-                }}
-              >
-                {post.code}
-              </div>
-              <div className={cls["post-footer"]}>
-                <div className={cls["action-buttons"]}>
-                  <button className="like-button">
-                    <LikeIcon />
-                  </button>
-                  <button className="dislike-button">
-                    <DislikeIcon />
-                  </button>
-                  <Button
-                    style={{
-                      width: "83px",
-                      height: "25px",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    Comments
-                  </Button>
-                </div>
-                <div className={cls["author-info"]}>
-                  <span>By</span> <span className="author-name">Anonymus</span>
-                  <span>,</span>
-                  <span className="post-date">
-                    {post.createdAt || "Unknown date"}
-                  </span>
-                </div>
-              </div>
-            </div>
+            <PostComponent
+              id={post.id}
+              title={post.title}
+              author={post.user.username}
+              code={post.code}
+              language={post.PostCategory[0].category.name || "Unknown"}
+              likes={post.reactions[0]?.like || 0}
+              dislikes={post.reactions[0]?.dislike || 0}
+              createdAt={post.createdAt}
+              onLike={() => handleLike(post.id)}
+              onDislike={() => handleDislike(post.id)}
+              key={post.id}
+            />
           ))}
 
         {activeTab === "reactions" &&
-          userReactions.map((reaction) => (
-            <div key={reaction.id} className={cls["post-card"]}>
-              <div className={cls["post-header"]}>
-                ❤️ You reacted to this post | <span>#js</span>
-              </div>
-              <div
-                style={{
-                  width: "843px",
-                  height: "148px",
-                  marginBottom: "14px",
-                  backgroundColor: "#ffffff",
-                }}
-              >
-                {reaction.Post.code}
-              </div>
-              <div className={cls["post-footer"]}>
-                <div className={cls["action-buttons"]}>
-                  <button className="like-button">
-                    <LikeIcon />
-                  </button>
-                  <button className="dislike-button">
-                    <DislikeIcon />
-                  </button>
-                  <Button
-                    style={{
-                      width: "83px",
-                      height: "25px",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    Comments
-                  </Button>
-                </div>
-                <div className={cls["author-info"]}>
-                  <span>By</span> <span className="author-name">Anonymus</span>
-                  <span>,</span>
-                  <span className="post-date">
-                    {reaction.createdAt || "Unknown date"}
-                  </span>
-                </div>
-              </div>
-            </div>
+          userReactions?.map((reaction) => (
+            <PostComponent
+              id={reaction.id}
+              title={reaction.Post.title}
+              author={reaction.Post.user.username}
+              code={reaction.Post.code}
+              language={reaction.Post.PostCategory[0].category.name|| "Unknown"}
+              likes={reaction.like || 0}
+              dislikes={reaction.dislike || 0}
+              createdAt={reaction.createdAt}
+              onLike={() => handleLike(reaction.id)}
+              onDislike={() => handleDislike(reaction.id)}
+              key={reaction.id}
+            />
           ))}
       </div>
     </div>
