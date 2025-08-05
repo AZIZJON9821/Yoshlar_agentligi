@@ -93,9 +93,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (response.data) {
         const userData: User = {
-          id: response.data.data.id || "1",
-          username: response.data.data.username || username,
-          email: response.data.data.email || `${username}@example.com`,
+          id: response.data.data.id,
+          username: response.data.data.username,
+          email: response.data.data.email,
           githubURL: response.data.data.github_username,
         };
         setCookie('token', response.data.token)
@@ -137,12 +137,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (response.data) {
         const userData: User = {
-          id: response.data.data.id || "1",
-          username: response.data.data.username || username,
-          email: response.data.data.email || email,
-          githubURL: response.data.data.github_username || github_username,
+          id: response.data.data.id,
+          username: response.data.data.username,
+          email: response.data.data.email ,
+          githubURL: response.data.data.github_username,
         };
-        console.log(response.data);
         
         setCookie('token', response.data.token)
         setUser(userData);

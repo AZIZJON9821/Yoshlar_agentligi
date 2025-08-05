@@ -21,14 +21,14 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (!isClient || !router.isReady) return;
 
-    const isProfilePage = router.pathname === "/profile";
-    const user = localStorage.getItem("user");
-    const token = getCookie("token");
+    const user = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+    const token = getCookie('token');
 
-    if (isProfilePage && !user) {
-      router.push("/auth/login");
+    if (router.pathname === '/profile' && !(user && token)) {
+      router.replace('/auth/login'); 
     }
   }, [isClient, router.isReady, router.pathname]);
+
 
   return (
     <QueryClientProvider client={client}>

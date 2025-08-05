@@ -46,10 +46,19 @@ const Register = () => {
       <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
         <Input
           control={control}
-          style={{ width: "100%", minWidth: "400px" }}
+          style={{ width: "100%", minWidth: "400px", border: '1px solid black',color:'black' }}
           name="username"
           variant={InputVariant.input}
-          placeholder="Username"
+          placeholder="Username *"
+          required={true}
+        />
+        <Input
+          control={control}
+          style={{ width: "100%", minWidth: "400px",border:'1px solid black',color:'black' }}
+          name="password"
+          type="password"
+          variant={InputVariant.input}
+          placeholder="Password *"
           required={true}
         />
         <Input
@@ -57,23 +66,14 @@ const Register = () => {
           style={{ width: "100%", minWidth: "400px" }}
           name="email"
           variant={InputVariant.input}
-          placeholder="Email"
-        />
-        <Input
-          control={control}
-          style={{ width: "100%", minWidth: "400px" }}
-          name="password"
-          type="password"
-          variant={InputVariant.input}
-          placeholder="Password"
-          required={true}
+          placeholder="Email (optional)"
         />
         <Input
           control={control}
           style={{ width: "100%", minWidth: "400px" }}
           name="ghUsername"
           variant={InputVariant.input}
-          placeholder="GitHub username"
+          placeholder="GitHub username (optional)"
         />
         <Button type="submit" style={{ width: "100%" }} disabled={isLoading}>
           {isLoading ? "Registering..." : "Submit"}

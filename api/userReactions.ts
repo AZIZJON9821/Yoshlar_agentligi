@@ -1,16 +1,13 @@
 import toast from "react-hot-toast";
 import { customAxios } from "./instances";
+import { ReactionData } from "@/types/api/user/reactions";
 
 export const getAllUserReactions = async () => {
   try {
-    const { data: likes } = await customAxios.get(
-      `/users/my-reactions?limit=100?type='like'`
+const res = await customAxios.get<{data: ReactionData[]}>(
+      `/users/my-reactions?limit=100`
     );
-    const { data: dislikes } = await customAxios.get(
-      `/users/my-reactions?limit=100?type='dislike'`
-    );
-    const reactions=[...likes.data,...dislikes.data]
-    return reactions;
+    return res.data?.data || [];
   } catch (e) {
     console.log(e);
   }

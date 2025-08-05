@@ -15,19 +15,19 @@ const NavbarLayout = () => {
         </div>
 
         <div className={cls["header-actions"]}>
-          <Action mode="light">
-            <Link href={"/posts/add"}>
+          <Link href={"/posts/add"}>
+            <Action mode="light">
               <PlusIcon />
-            </Link>
-          </Action>
+            </Action>
+          </Link>
           <Action mode="light">
             <SettingsIcon />
           </Action>
-          <Action mode="dark">
-            <Link href={"/profile"}>
+          <Link href={"/profile"}>
+            <Action mode="dark">
               <UserIcon />
-            </Link>
-          </Action>
+            </Action>
+          </Link>
         </div>
       </div>
     </div>
