@@ -1,6 +1,5 @@
-// AddPost.tsx
-import React, { useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import React, { useEffect, useRef, useState } from "react";
+import {  useForm, useWatch } from "react-hook-form";
 import Input from "@/components/Input";
 import CodeEditor from "@/components/code-editor";
 import Button from "@/components/button";
@@ -25,7 +24,11 @@ export interface FormData {
 }
 
 const AddPost: React.FC = () => {
+
   const router= useRouter()
+
+
+
   const {
     control,
     handleSubmit,
@@ -73,24 +76,23 @@ const AddPost: React.FC = () => {
         }
       }
     } catch {
-      // ignore
     }
   }, []);
 
   const validate = (values: FormData) => {
     let valid = true;
     if (!values.title?.trim()) {
-      setError("title", { type: "required", message: "Title kerak" });
+      setError("title", { type: "required", message: "Title need" });
       valid = false;
     }
     if (!values.code?.trim()) {
-      setError("code", { type: "required", message: "Code kerak" });
+      setError("code", { type: "required", message: "Code need" });
       valid = false;
     }
     if (!values.categoryName?.trim()) {
       setError("categoryName", {
         type: "required",
-        message: "Category tanlanishi kerak",
+        message: "Language by selected need",
       });
       valid = false;
     }
@@ -100,38 +102,41 @@ const AddPost: React.FC = () => {
   const onSubmit = (data: FormData) => {
     if (!validate(data)) return;
 
-    submitPost(
-      {
-        payload: {
-          title: data.title,
-          code: data.code,
-          categoryName: data.categoryName,
+    if (data.categoryName === "Select Language") {
+      return setError("categoryName", {
+        message:"language need by selected"
+      })
+    }
+      submitPost(
+        {
+          payload: {
+            title: data.title,
+            code: data.code,
+            categoryName: data.categoryName,
+          },
+          anonymous: data.anonymous,
         },
-        anonymous: data.anonymous,
-      },
-      {
-        onSuccess: () => {
-          setSuccessMessage("Post muvaffaqiyatli jo'natildi.");
-          setSubmitError(null);
-          reset({
-            title: "",
-            code: "",
-            categoryName: "",
-            anonymous: true,
-          });
-          router.push('/')
-        },
-        onError: (err: any) => {
-          const message =
-            err?.message ||
-            (err instanceof Error
-              ? err.message
-              : "Jo'natishda xatolik yuz berdi.");
-          setSubmitError(message);
-          setSuccessMessage(null);
-        },
-      }
-    );
+        {
+          onSuccess: () => {
+            setSuccessMessage("Post added");
+            setSubmitError(null);
+            reset({
+              title: "",
+              code: "",
+              categoryName: "",
+              anonymous: true,
+            });
+            router.push("/");
+          },
+          onError: (err: any) => {
+            const message =
+              err?.message ||
+              (err instanceof Error ? err.message : "Post error ");
+            setSubmitError(message);
+            setSuccessMessage(null);
+          },
+        }
+      );
   };
 
   return (
@@ -149,12 +154,15 @@ const AddPost: React.FC = () => {
           <Input
             name="categoryName"
             variant={InputVariant.select}
-            options={categories.map((c) => ({
+            options={[{ name: "Select Language" }, ...categories].map((c) => ({
               value: c.name.toUpperCase(),
               label: c.name,
             }))}
             placeholder="Category"
             control={control}
+            style={
+              errors.categoryName ? { border: "1px solid red" } : {}
+            }
           />
         </div>
 
@@ -171,14 +179,22 @@ const AddPost: React.FC = () => {
           <CodeEditor name="code" control={control} style={{ width: "100%" }} />
           {errors.code && (
             <p className={styles.errorText}>
-              {(errors.code as any)?.message || "Code kerak"}
+              {(errors.code as any)?.message || "Code need"}
             </p>
           )}
         </div>
 
         <div className={styles.actions}>
           <div className={styles.leftGroup}>
-            {user && <div className={styles.username}>{user.username}</div>}
+            {user && (
+              <div
+                className={`${styles.username} ${
+                  anonymous ? styles["username-disabled"] : ""
+                }`}
+              >
+                {user.username}
+              </div>
+            )}
             <label className={styles.checkbox}>
               <input
                 type="checkbox"
@@ -201,19 +217,19 @@ const AddPost: React.FC = () => {
         )}
         {!submitError && mutationError && (
           <div className={styles.feedbackError}>
-            {(mutationError as any)?.message || "Xatolik yuz berdi."}
+            {(mutationError as any)?.message || "Error."}
           </div>
         )}
 
         <div style={{ marginTop: 8 }}>
           {errors.title && (
             <div className={styles.fieldError}>
-              {(errors.title as any)?.message || "Title kerak"}
+              {(errors.title as any)?.message || "Title need"}
             </div>
           )}
           {errors.categoryName && (
             <div className={styles.fieldError}>
-              {(errors.categoryName as any)?.message || "Category kerak"}
+              {(errors.categoryName as any)?.message || "Language need"}
             </div>
           )}
         </div>

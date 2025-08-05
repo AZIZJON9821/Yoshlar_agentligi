@@ -17,9 +17,19 @@ const LanguageSelector = () => {
     if (isSelected) {
       const updatedSelection = selected.filter((item) => item.id !== lang.id);
       setSelected(updatedSelection);
+      const remainingLangs = updatedSelection.map((l) => l.name);
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, language: remainingLangs.join(",") },
+      });
     } else {
       const updatedSelection = [...selected, lang];
       setSelected(updatedSelection);
+      const selectedLangs = updatedSelection.map((l) => l.name);
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, language: selectedLangs.join(",") },
+      });
     }
   };
 
