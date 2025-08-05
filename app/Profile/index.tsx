@@ -22,10 +22,10 @@ const Profile = () => {
           setUser(JSON.parse(userData));
         } catch (error) {
           console.error("User JSON parsing error:", error);
-          router.push("/login");
+          router.push("/auth/login");
         }
       } else {
-        router.push("/login");
+        router.push("/auth/login");
       }
     }
   }, []);
