@@ -1,3 +1,4 @@
+// AddPost.tsx
 import React, { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import Input from "@/components/Input";
@@ -5,7 +6,16 @@ import CodeEditor from "@/components/code-editor";
 import Button from "@/components/button";
 import styles from "./add.post.module.css";
 import { InputVariant } from "@/types";
-import { customAxios } from "@/api/instances/codeMuseum";
+import { useCategories } from "@/hook/useCategories";
+import { useSubmitPost } from "@/hook/useSubmitPost";
+import { useRouter } from "next/router";
+
+interface IUser {
+  id: string;
+  email: string;
+  githubURL: string;
+  username: string;
+}
 
 export interface FormData {
   title: string;
@@ -14,19 +24,15 @@ export interface FormData {
   anonymous: boolean;
 }
 
-interface Category {
-  id: string;
-  name: string;
-}
-
 const AddPost: React.FC = () => {
+  const router= useRouter()
   const {
     control,
     handleSubmit,
     setValue,
     reset,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       title: "",
@@ -37,30 +43,38 @@ const AddPost: React.FC = () => {
   });
 
   const anonymous = useWatch({ control, name: "anonymous" });
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    isError,
+  } = useCategories();
+
+  const submitMutation = useSubmitPost();
+  const {
+    mutate: submitPost,
+    error: mutationError,
+    isSuccess,
+  } = submitMutation;
+
+  const isSubmitting = submitMutation.status === "pending";
+
+  const [user, setUser] = useState<IUser | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
-  }, [anonymous]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const resp = await customAxios.get("/categories");
-        const data = resp.data?.data;
-        if (Array.isArray(data)) {
-          setCategories(data);
+    try {
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem("user");
+        if (stored) {
+          const parsed = JSON.parse(stored) as IUser;
+          setUser(parsed);
         }
-      } catch (e) {
-        console.warn("Category fetch failed, using fallback", e);
-        setCategories([
-          { id: "javascript", name: "JavaScript" },
-          { id: "python", name: "Python" },
-        ]);
       }
-    };
-    fetchCategories();
+    } catch {
+      // ignore
+    }
   }, []);
 
   const validate = (values: FormData) => {
@@ -83,38 +97,41 @@ const AddPost: React.FC = () => {
     return valid;
   };
 
-  const onSubmit = async (data: FormData) => {
-    setSubmitError(null);
-    setSuccessMessage(null);
-
+  const onSubmit = (data: FormData) => {
     if (!validate(data)) return;
 
-    const payload = {
-      title: data.title,
-      code: data.code,
-      categoryName: data.categoryName.toUpperCase(),
-    };
-
-    const endpoint = data.anonymous ? "/posts/anonymous" : "/posts";
-
-    try {
-      const res = await customAxios.post(endpoint, payload, {
-        headers: { "Content-Type": "application/json" },
-      });
-      setSuccessMessage("Post muvaffaqiyatli jo'natildi.");
-      reset({
-        title: "",
-        code: "",
-        categoryName: "",
-        anonymous: true,
-      });
-      console.log("API response:", res.data);
-    } catch (err: any) {
-      console.error("Submit error:", err);
-      setSubmitError(
-        err?.response?.data?.message || "Jo'natishda xatolik yuz berdi."
-      );
-    }
+    submitPost(
+      {
+        payload: {
+          title: data.title,
+          code: data.code,
+          categoryName: data.categoryName,
+        },
+        anonymous: data.anonymous,
+      },
+      {
+        onSuccess: () => {
+          setSuccessMessage("Post muvaffaqiyatli jo'natildi.");
+          setSubmitError(null);
+          reset({
+            title: "",
+            code: "",
+            categoryName: "",
+            anonymous: true,
+          });
+          router.push('/')
+        },
+        onError: (err: any) => {
+          const message =
+            err?.message ||
+            (err instanceof Error
+              ? err.message
+              : "Jo'natishda xatolik yuz berdi.");
+          setSubmitError(message);
+          setSuccessMessage(null);
+        },
+      }
+    );
   };
 
   return (
@@ -141,6 +158,15 @@ const AddPost: React.FC = () => {
           />
         </div>
 
+        {categoriesLoading && (
+          <div className={styles.loading}>Loading categories...</div>
+        )}
+        {isError && (
+          <div className={styles.fieldError}>
+            Kategoriya yuklanmadi, defaultlar ishlatilishi mumkin.
+          </div>
+        )}
+
         <div className={styles.editorWrapper}>
           <CodeEditor name="code" control={control} style={{ width: "100%" }} />
           {errors.code && (
@@ -152,6 +178,7 @@ const AddPost: React.FC = () => {
 
         <div className={styles.actions}>
           <div className={styles.leftGroup}>
+            {user && <div className={styles.username}>{user.username}</div>}
             <label className={styles.checkbox}>
               <input
                 type="checkbox"
@@ -161,7 +188,7 @@ const AddPost: React.FC = () => {
               Anonymous sharing
             </label>
           </div>
-          <Button type="submit" >
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Submit"}
           </Button>
         </div>
@@ -171,6 +198,11 @@ const AddPost: React.FC = () => {
         )}
         {successMessage && (
           <div className={styles.feedbackSuccess}>{successMessage}</div>
+        )}
+        {!submitError && mutationError && (
+          <div className={styles.feedbackError}>
+            {(mutationError as any)?.message || "Xatolik yuz berdi."}
+          </div>
         )}
 
         <div style={{ marginTop: 8 }}>
