@@ -72,11 +72,17 @@
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-  color: #b3b3b3;
+  color: black;
   padding-top: 10px;
   text-align: center;
   background-color: white;
 }
+
+.username-disabled {
+  color: #b3b3b3;
+  background-color: #f1f1f1;
+}
+
 
 @media (max-width: 900px) {
   .row {
