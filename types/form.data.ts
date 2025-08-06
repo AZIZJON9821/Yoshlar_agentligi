@@ -4,7 +4,7 @@ export interface FormData {
   categoryName: string;
 }
 
-export interface Category {
+interface Category {
   id: string;
   name: string;
 }

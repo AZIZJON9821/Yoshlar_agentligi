@@ -74,23 +74,23 @@
   margin: 0 0 6px 0;
   font-family: Montserrat;
   font-weight: 500;
-  font-style: Medium;
-  font-size: 12px;
-  line-height: 100%;
-  letter-spacing: 0%;
+  font-size: 16px;
   color: #000000;
 }
 
 .commentText p {
   margin: 0;
   font-size: 14px;
-  color: #000000;
   font-family: Montserrat;
-  font-weight: 300;
-  font-style: Light;
-  font-size: 12px;
-  line-height: 100%;
-  letter-spacing: 0%;
+  font-weight: 400;
+  color: #000000;
+}
+
+.commentText .time {
+  display: block;
+  margin-top: 6px;
+  font-size: 10px;
+  color: #777;
 }
 
 .inputSection {

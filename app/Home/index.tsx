@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import cls from "./home.module.css";
 import PostComponent from "@/components/Post";
 import { PLang } from "@/components";
 import { useGetAllPosts } from "@/hook";
-import { customAxios } from "@/api";
 import { useAuth } from "@/context";
-import { Post } from "@/types";
+import { useReactionMutate } from "@/hook/useReaction";
 
 const HomePage = () => {
-  const { selected } = useAuth();
+  const {selected} = useAuth();
+
 
   const { data: posts } = useGetAllPosts();
 
-  let filtered = selected?.id
-    ? posts?.filter((el) =>
-        el.PostCategory[0].category.id.includes(selected?.id)
+  let filtered = selected?.length
+  ? posts?.filter((post) =>
+      post.PostCategory?.some((cat) =>
+        selected?.some((sel) => sel.id ==  cat.category.id)
       )
-    : posts;
+    )
+  : posts;
 
-  const handleLike = async (id: string | number) => {
-    const data = { type: "like" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
+
+  const reactionAction = useReactionMutate();
+
+  const handleLike = (id: string) => {
+    reactionAction.mutate({id, type: "like"})
   };
 
-  const handleDislike = async (id: string | number) => {
-    const data = { type: "dislike" };
-    await customAxios.post(`/posts/${id}/reactions`, data);
+  const handleDislike = (id: string) => {
+    reactionAction.mutate({id, type: "dislike"})
   };
+
 
   return (
     <div className="container">
@@ -34,7 +38,8 @@ const HomePage = () => {
         <div className={cls["p"]}>
           <p>Discover the coding world</p>
         </div>
-        <PLang />
+        <PLang/>
+        {filtered?.length ? null : <p>No codes yet ...</p>}
         <div className={cls["posts"]}>
           {filtered?.map((post) => (
             <PostComponent
@@ -43,8 +48,8 @@ const HomePage = () => {
               author={post.user.username}
               code={post.code}
               language={post.PostCategory[0].category.name || "Unknown"}
-              likes={post.reactions[0]?.like || 0}
-              dislikes={post.reactions[0]?.dislike || 0}
+              likes={post.reactions.filter(el => el.like).length || 0}
+              dislikes={post.reactions.filter(el => el.dislike).length || 0}
               createdAt={post.createdAt}
               onLike={() => handleLike(post.id)}
               onDislike={() => handleDislike(post.id)}

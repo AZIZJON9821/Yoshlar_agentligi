@@ -9,7 +9,6 @@ export default async function handler(
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  console.log("API Route called with query:", req.query);
 
   try {
     const { id } = req.query;
@@ -17,7 +16,6 @@ export default async function handler(
       ? `https://api.it-mahalla.uz/categories/${id}`
       : "https://api.it-mahalla.uz/categories";
 
-    console.log("Making request to:", url);
 
     const response = await axios.get(url, {
       timeout: 5000,
