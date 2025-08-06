@@ -63,15 +63,17 @@ const PostComponent = ({
         )}
       </div>
       <div className={cls["post-footer"]}>
-        <div>
-          <button className={cls.btn} onClick={() => onLike(id)}>
-            <LikeIcon />
-            {likes}
-          </button>
-          <button className={cls.btn} onClick={() => onDislike(id)}>
-            <DisLikeIcon />
-            {dislikes}
-          </button>
+        <div className={cls.actions}>
+          <div >
+            <button className={cls.btn} onClick={() => onLike(id)}>
+              <LikeIcon />
+              {likes}
+            </button>
+            <button className={cls.btn} onClick={() => onDislike(id)}>
+              <DisLikeIcon />
+              {dislikes}
+            </button>
+          </div>
           <Button
             children={"Comments"}
             style={{

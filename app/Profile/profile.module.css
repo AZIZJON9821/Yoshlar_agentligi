@@ -77,9 +77,13 @@
   color: #000000;
 }
 .tabs {
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: #fff; 
+  z-index: 100; 
   margin-bottom: 31px;
 }
+
 .tabs hr {
   position: absolute;
   bottom: 0;
@@ -115,7 +119,6 @@
   flex-direction: column;
   gap: 20px;
   max-height: 530px;
-  overflow-y: auto;
   padding-right: 8px;
 }
 .post-card {

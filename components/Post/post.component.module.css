@@ -75,47 +75,52 @@
   align-items: center;
 }
 
-.toggle-button:hover{
+.toggle-button:hover {
   opacity: 0.5;
+}
+.post-footer div:first-child {
+  display: flex;
+  align-items: center;
 }
 
 /* Responsive post component */
 @media (max-width: 768px) {
   .post-container {
     max-width: 100%;
+    padding: 8px;
     min-height: 350px;
   }
-  
+
   .title {
     font-size: 14px;
     padding: 12px 20px;
   }
-  
+
   .post-content {
     max-width: 100%;
     padding: 16px;
     min-height: 250px;
   }
-  
+
   .post-footer {
     padding: 12px 20px;
     gap: 10px;
     flex-wrap: wrap;
   }
-  
+
   .post-author {
     gap: 8px;
     font-size: 9px;
   }
-  
+
   .author-name {
     font-size: 11px;
   }
-  
+
   .created-date {
     font-size: 9px;
   }
-  
+
   .toggle-button {
     bottom: 16px;
     right: 20px;
@@ -125,39 +130,46 @@
 
 @media (max-width: 480px) {
   .post-container {
+    padding: 4px;
     min-height: 300px;
   }
-  
+
   .title {
     font-size: 12px;
     padding: 10px 16px;
   }
-  
+
   .post-content {
     padding: 12px;
     min-height: 200px;
   }
-  
+
   .post-footer {
     padding: 10px 16px;
+    width: 100%;
     gap: 8px;
     flex-direction: column;
     align-items: flex-start;
   }
-  
+  .actions {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
   .post-author {
     gap: 6px;
     font-size: 8px;
   }
-  
+
   .author-name {
     font-size: 10px;
   }
-  
+
   .created-date {
     font-size: 8px;
   }
-  
+
   .toggle-button {
     bottom: 12px;
     right: 16px;

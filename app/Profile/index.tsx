@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import cls from "./profile.module.css";
-import {UserIcon } from "./icons";
+import { UserIcon } from "./icons";
 import { useUserPosts, useUserReactions } from "@/hook";
 import { useRouter } from "next/router";
 import PostComponent from "@/components/Post";
@@ -33,11 +33,11 @@ const Profile = () => {
   const reactionAction = useReactionMutate();
 
   const handleLike = (id: string) => {
-    reactionAction.mutate({ id, type: "like" });
+    reactionAction.mutate({ id, type: "like" })
   };
 
   const handleDislike = (id: string) => {
-    reactionAction.mutate({ id, type: "dislike" });
+    reactionAction.mutate({ id, type: "dislike" })
   };
 
   if (!user) return null;
@@ -63,9 +63,8 @@ const Profile = () => {
             My posts
           </button>
           <button
-            className={`${cls.tab} ${
-              activeTab === "reactions" ? cls.active : ""
-            }`}
+            className={`${cls.tab} ${activeTab === "reactions" ? cls.active : ""
+              }`}
             onClick={() => setActiveTab("reactions")}
           >
             My reactions
