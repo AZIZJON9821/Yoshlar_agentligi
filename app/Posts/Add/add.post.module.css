@@ -96,3 +96,92 @@
     font-size: 28px;
   }
 }
+
+/* Responsive add post */
+@media (max-width: 768px) {
+  .form {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .panel {
+    padding: 12px 16px 20px;
+    gap: 12px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  
+  .row {
+    gap: 8px;
+  }
+  
+  .editorWrapper {
+    padding: 10px;
+    min-height: 180px;
+  }
+  
+  .actions {
+    gap: 8px;
+  }
+  
+  .leftGroup {
+    gap: 12px;
+  }
+  
+  .checkbox {
+    font-size: 12px;
+  }
+  
+  .username {
+    width: 100%;
+    min-width: 100%;
+    height: 38px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .panel {
+    padding: 10px 12px 16px;
+    gap: 10px;
+  }
+  
+  .title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .row {
+    gap: 6px;
+  }
+  
+  .editorWrapper {
+    padding: 8px;
+    min-height: 150px;
+  }
+  
+  .actions {
+    gap: 6px;
+  }
+  
+  .leftGroup {
+    gap: 8px;
+  }
+  
+  .checkbox {
+    font-size: 11px;
+  }
+  
+  .username {
+    height: 36px;
+    font-size: 13px;
+  }
+}

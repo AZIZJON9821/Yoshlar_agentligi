@@ -4,8 +4,28 @@
     align-items: flex-start;
     gap: 15px;
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .link:hover {
   text-decoration: underline;
+}
+
+/* Responsive register form */
+@media (max-width: 768px) {
+  .form {
+    gap: 12px;
+    margin-bottom: 16px;
+    max-width: 100%;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 0 12px;
+  }
 }

@@ -7,4 +7,25 @@
   color: #ffffff;
   gap: 8;
   cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Responsive button */
+@media (max-width: 768px) {
+  .default-button {
+    width: 70px;
+    height: 36px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .default-button {
+    width: 65px;
+    height: 32px;
+    border-radius: 5px;
+    font-size: 11px;
+  }
 }

@@ -15,10 +15,45 @@
   flex-direction: column;
   gap: 16px;
 }
+
 .wrapper{
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
   justify-content: space-between;
+}
+
+/* Responsive home page */
+@media (max-width: 768px) {
+  .p {
+    max-width: 100%;
+    margin-top: 40px;
+    font-size: 28px;
+    padding: 0 16px;
+  }
+  
+  .posts {
+    gap: 12px;
+  }
+  
+  .wrapper {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .p {
+    margin-top: 24px;
+    font-size: 24px;
+    padding: 0 12px;
+  }
+  
+  .posts {
+    gap: 8px;
+  }
+  
+  .wrapper {
+    gap: 8px;
+  }
 }

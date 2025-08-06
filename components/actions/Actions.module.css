@@ -7,7 +7,9 @@
   background-color: #F5F5F5;
   color: #1D1B20;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
+
 .dark {
   width: 44px;
   height: 44px;
@@ -17,5 +19,35 @@
   border: 1px solid #2C2C2C;
   color: #F5F5F5;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Responsive actions */
+@media (max-width: 768px) {
+  .light {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+  
+  .dark {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .light {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+  
+  .dark {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
 }
 

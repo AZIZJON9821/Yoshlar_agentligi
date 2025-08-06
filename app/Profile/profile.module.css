@@ -180,3 +180,121 @@
   font-style: normal;
   font-size: 8px;
 }
+
+/* Responsive profile */
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .header-actions {
+    gap: 16px;
+  }
+  
+  .title {
+    font-size: 18px;
+  }
+  
+  .profile-header {
+    margin-bottom: 40px;
+    gap: 16px;
+  }
+  
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 24px;
+  }
+  
+  .profile-info {
+    font-size: 14px;
+  }
+  
+  .tabs button {
+    width: 90px;
+    height: 24px;
+    font-size: 12px;
+  }
+  
+  .posts-list {
+    gap: 16px;
+    max-height: 400px;
+  }
+  
+  .post-card {
+    padding: 12px;
+  }
+  
+  .post-header {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .post-header span {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  
+  .header-actions {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .title {
+    font-size: 16px;
+  }
+  
+  .profile-header {
+    margin-bottom: 24px;
+    gap: 12px;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+  }
+  
+  .profile-info {
+    font-size: 12px;
+  }
+  
+  .tabs button {
+    width: 80px;
+    height: 22px;
+    font-size: 11px;
+  }
+  
+  .posts-list {
+    gap: 12px;
+    max-height: 300px;
+  }
+  
+  .post-card {
+    padding: 10px;
+  }
+  
+  .post-header {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .post-header span {
+    font-size: 12px;
+  }
+  
+  .action-buttons {
+    gap: 8px;
+  }
+}

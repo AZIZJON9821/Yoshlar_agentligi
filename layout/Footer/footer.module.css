@@ -23,3 +23,26 @@
   letter-spacing: 0%;
   text-align: center;
 }
+
+/* Responsive footer */
+@media (max-width: 768px) {
+  .copyrightSection {
+    padding: 12px 0;
+  }
+  
+  .copyrightText {
+    font-size: 12px;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .copyrightSection {
+    padding: 10px 0;
+  }
+  
+  .copyrightText {
+    font-size: 11px;
+    padding: 0 12px;
+  }
+}
