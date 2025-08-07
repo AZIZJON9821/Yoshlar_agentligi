@@ -1,9 +1,9 @@
 import { getAllPosts } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetAllPosts = () => {
+export const useGetAllPosts = (page=1,limit=10) => {
   return useQuery({
     queryKey: ["posts"],
-    queryFn: () => getAllPosts(),
+    queryFn: () => getAllPosts(page,limit),
   });
 };

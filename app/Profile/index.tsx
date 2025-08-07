@@ -14,7 +14,6 @@ const Profile = () => {
   const { data: userPosts = [] } = useUserPosts();
   const { data: userReactions = [] } = useUserReactions();
 
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("user");
