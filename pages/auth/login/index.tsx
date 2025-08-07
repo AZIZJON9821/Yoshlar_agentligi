@@ -1,5 +1,5 @@
-import { LoginPage } from "@/app";
 import React from "react";
+import { LoginPage } from "@/app";
 
 const Login = () => {
   return <LoginPage />;
