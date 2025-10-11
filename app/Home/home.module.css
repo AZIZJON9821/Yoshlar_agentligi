@@ -1,26 +1,74 @@
+/* home.module.css */
 .p {
   max-width: 453px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
-
   font-size: 36px;
-  font-weight: 600;
-  line-height: 100%;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a1a1a;
 }
 
-.posts{
+.posts {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+  padding: 0 16px;
 }
 
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+/* Card style */
+.card {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 3px solid #c7c7c7;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.cardImage {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cardContent {
+  padding: 16px;
+}
+
+.cardContent h3 {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0d1b2a;
+}
+
+.cardContent p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
 }
 
 /* Responsive home page */
@@ -31,13 +79,21 @@
     font-size: 28px;
     padding: 0 16px;
   }
-  
+
   .posts {
-    gap: 12px;
+    gap: 16px;
   }
-  
-  .wrapper {
-    gap: 12px;
+
+  .cardContent h3 {
+    font-size: 20px;
+  }
+
+  .cardContent p {
+    font-size: 15px;
+  }
+
+  .cardImage {
+    height: 350px;
   }
 }
 
@@ -47,12 +103,20 @@
     font-size: 24px;
     padding: 0 12px;
   }
-  
+
   .posts {
-    gap: 8px;
+    gap: 12px;
   }
-  
-  .wrapper {
-    gap: 8px;
+
+  .cardContent h3 {
+    font-size: 18px;
+  }
+
+  .cardContent p {
+    font-size: 14px;
+  }
+
+  .cardImage {
+    height: 250px;
   }
 }

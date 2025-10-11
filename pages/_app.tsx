@@ -7,6 +7,7 @@ import { AppProvider } from "@/context";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import Head from "next/head"; // 🔹 Favicon uchun import
 
 const client = new QueryClient();
 
@@ -29,10 +30,14 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [isClient, router.isReady, router.pathname]);
 
-
   return (
     <QueryClientProvider client={client}>
       <AppProvider>
+        <Head>
+          {/* 🔹 Bu joyda sizning favicon faylingiz joylashgan */}
+          <link rel="icon" href="/favicon.png" type="image/png" />
+          <title>Yoshlar agentligi</title>
+        </Head>
         <MainLayout>
           <Component {...pageProps} />
           <Toaster />

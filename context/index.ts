@@ -1,2 +1,2 @@
-export { AuthProvider, useAuth } from './AuthContext';
-export { AppProvider } from './AppProvider'; 
+export {  useAppContext } from "./AppContext";
+export { AppProvider } from "./AppContext";

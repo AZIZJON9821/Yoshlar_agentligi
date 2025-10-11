@@ -1,0 +1,78 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #004b87;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #333;
+}
+
+.input,
+.textarea {
+  margin-top: 6px;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #004b87;
+  box-shadow: 0 0 5px rgba(0, 75, 135, 0.4);
+}
+
+.button {
+  background: #004b87;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background: #0066cc;
+}
+
+/* 🔹 Pasport inputlar uchun */
+.passportGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.passportLetters {
+  width: 25%;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.passportNumbers {
+  width: 70%;
+  text-align: center;
+}
