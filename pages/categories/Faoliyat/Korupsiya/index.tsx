@@ -1,12 +1,24 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import styles from "./index.module.css";
+import image from "./images/korupsiya.jpg"; // <== rasmni shu joyga joylashtirasiz
 
 const AboutAgencyPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+        {/* === Tepa rasm === */}
+        <div className={styles.imageWrapper}>
+          <Image
+            src={image}
+            alt="O‘zbekiston Respublikasi Korrupsiyaga qarshi kurash agentligi binosi"
+            className={styles.image}
+            priority
+          />
+        </div>
+
         <h1 className={styles.title}>
           O‘zbekiston Respublikasi Korrupsiyaga qarshi kurash agentligi
         </h1>

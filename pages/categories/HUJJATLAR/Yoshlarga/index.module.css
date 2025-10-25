@@ -10,6 +10,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   color: #004b87;
+  
 }
 
 /* Jadvalni silliq qilish */
@@ -22,7 +23,7 @@
   width: 100%;
   border-collapse: collapse;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.50);
   min-width: 800px; /* scroll bo‘lishi uchun */
 }
 

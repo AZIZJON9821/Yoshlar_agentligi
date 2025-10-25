@@ -4,7 +4,7 @@
   padding: 20px;
   background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.50);
 }
 
 .title {
@@ -43,14 +43,14 @@
   background: #ffffff;
   border-radius: 16px;
   padding: 16px 20px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.40);
   border: 1px solid #e5e7eb;
   transition: all 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.60);
 }
 
 .imageWrapper {

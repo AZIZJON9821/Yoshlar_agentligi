@@ -26,12 +26,13 @@
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   padding: 16px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.50);
   transition: transform 0.2s;
 }
 
 .card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(49, 138, 227, 0.50);
 }
 
 .imageWrapper {

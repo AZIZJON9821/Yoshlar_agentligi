@@ -35,7 +35,7 @@ const leaders = [
     id: 3,
     name: "Ibodullayev Sardorjon Egamberdi o‘g‘li",
     mahalla: "Fayzobod MFY Yoshlar yetakchisi",
-    phone: "+998 99 401 39 92",
+    phone: "+998 99 401 39 92", //
     img: person3,
   },
 
@@ -43,7 +43,7 @@ const leaders = [
     id: 4,
     name: "Abdullayev Murodjon Shamsiddin o'g'li",
     mahalla: "Lolaariq MFY Yoshlar yetakchisi",
-    phone: "+998 50 998 99 80",
+    phone: "+998 50 998 99 80", //
     img: person4,
   },
 
@@ -51,7 +51,7 @@ const leaders = [
     id: 5,
     name: "Abdujalolov Abdurahmon Abdusalom o‘g‘li",
     mahalla: "Oybek MFY Yoshlar yetakchisi",
-    phone: "+998 50 998 99 80",
+    phone: "+998 95 828 30 80", //
     img: person5,
   },
   {
@@ -59,7 +59,7 @@ const leaders = [
     id: 6,
     name: "Abdurakhimov Odiljon Adkham o‘g‘li",
     mahalla: "Mo'minobod MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 95 828 50 10", //
     img: person6,
   },
 
@@ -67,7 +67,7 @@ const leaders = [
     id: 7,
     name: "Inomjonov Ilhomjon Ibrohim o‘g‘li",
     mahalla: "Yangiobod MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 95 898 12 99", //
     img: person7,
   }
   ,
@@ -75,7 +75,7 @@ const leaders = [
     id: 8,
     name: "Jilqiboev Valikhan Baxodirovich",
     mahalla: "Oqtepa MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 99 980 14 97", //
     img: person8,
   }
   ,
@@ -83,7 +83,7 @@ const leaders = [
     id: 9,
     name: "Abdug‘aniyev Shoxrux Abdug‘ofur o‘g‘li",
     mahalla: "Mustaqillik MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 99 491 94 20", //
     img: person9,
   }
 
@@ -100,14 +100,14 @@ const leaders = [
     id: 11,
     name: "Qayumov Xudoyor Baxtiyor o'g'li",
     mahalla: "Guliston MFY Yoshlar yetakchisi",
-    phone: "+998 ",
+    phone: "+998 95 828 40 30",//
     img: person11,
   },
   {
     id: 12,
     name: "Qilichev Doston Raximberdi o'g'li",
     mahalla: "Ko'l otar MFY Yoshlar yetakchisi",
-    phone: "+998 99 847 36 03",//
+    phone: "+998 95 828 30 90",//
     img: person12,
   },
 
@@ -123,7 +123,7 @@ const leaders = [
     id: 14,
     name: "Abdusalomov Toxir Shovkat o‘g‘li",
     mahalla: "Birlik MFY Yoshlar yetakchisi",
-    phone: "+998 93 172 77 70",
+    phone: "+998 95 828 10 60",//
     img: person14,
   }
   ,
@@ -131,7 +131,7 @@ const leaders = [
     id: 15,
     name: "Abduraximov Abrorjon Shuxrat o‘g‘li",
     mahalla: "Mingtepa MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 95 828 30 50", //
     img: person15,
   },
   {
@@ -144,28 +144,28 @@ const leaders = [
     id: 17,
     name: "Muzaffarxonov Ziyovuddinxon Zaynilobiddin o’g’li",
     mahalla: "Saidobod MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 95 828 40 60", //
     img: person17,
   },
   {
     id: 18,
     name: "Qo‘chqorov Zahriddin Jumanazar o‘g‘li",
     mahalla: "Taraqqiyot MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 99 467 60 99", //
     img: person18,
   },
   { 
     id:19,
     name: "Adasova Asal Umirzoq qizi",
     mahalla: "G'ayrat MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 95 828 90 10", //
     img: person19,
   }
 
   ,{
     id:20,
     name: "Tulqin ov Axror Muzaffar o‘g‘li",
-    mahalla: "Donqorg‘on MFY MFY Yoshlar yetakchisi",
+    mahalla: "Donqorg‘on MFY Yoshlar yetakchisi",
     phone: "+998 95 828 50 30", //
     img: person20,
   },
@@ -173,7 +173,7 @@ const leaders = [
     id:21,
     name: "Yakubova Shaxlo Sheraliyevna",
     mahalla: "Bekobod MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10",
+    phone: "+998 95 828 50 80", //
     img: person21,
   }
   ,
@@ -187,20 +187,20 @@ const leaders = [
   {    id: 23,
     name: "Dehkonova Aziza Sodig‘jon qizi",
     mahalla: "Kultepa MFY Yoshlar yetakchisi",
-    phone: "+998942142990", //
+    phone: "+998 94 214 29 90", //
     img: person23,
   },
 
   {    id: 24,
     name: "Yuldashev Sarvar Jamoliddin o'g'li",
     mahalla: "Muratali MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10", 
+    phone: "+998 93 188 19 98", //
     img: person24,
   },
   {    id: 25,
     name: "Yoqubov Akmal Abbosjon o'g'li",
     mahalla: "Navoiy MFY Yoshlar yetakchisi",
-    phone: "+998 95 828 40 10", 
+    phone: "+998 95 828 50 20", //
     img: person25,
   },
 

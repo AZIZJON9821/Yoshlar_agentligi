@@ -4,6 +4,7 @@
   padding: 40px;
   background: #f9f9f9;
   min-height: 100vh;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.40);
 }
 
 .title {
